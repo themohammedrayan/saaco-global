@@ -1,74 +1,99 @@
 import Link from 'next/link'
-import { ArrowRight, Plus } from 'lucide-react'
 import { href, tr, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
-import type { Category } from '@/content/products'
+import { categories, type Category } from '@/content/products'
 import { partners, process } from '@/content/company'
-import { stats, waLink } from '@/content/site'
+import { site, waLink } from '@/content/site'
 import { faqs } from '@/content/faq'
-import { Icon, WhatsAppIcon } from './Icon'
 import { Img } from './Img'
-import { ButtonLink, Container, cx } from './ui'
+import { Arrow, ButtonLink, Container, RunningHead, Seal, cx } from './ui'
 
-export function CategoryCard({ c, locale, large }: { c: Category; locale: Locale; large?: boolean }) {
+export const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+
+/** Ledger-style index of all categories; the plate image reveals on hover (desktop). */
+export function CategoryIndex({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   return (
-    <Link
-      data-reveal
-      href={href(locale, `/products/${c.slug}`)}
-      className={cx(
-        'group relative isolate flex flex-col justify-end overflow-hidden rounded-3xl bg-forest-900 p-6 text-white shadow-sm sm:p-8',
-        large ? 'min-h-[26rem] lg:min-h-[34rem]' : 'min-h-[20rem]',
-      )}
-    >
-      <Img
-        src={c.cover}
-        alt=""
-        fill
-        sizes={large ? '(min-width:1024px) 50vw, 100vw' : '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw'}
-        className="-z-20 object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-950/95 via-forest-950/45 to-transparent" />
-      <h3 className={cx('font-display', large ? 'text-3xl sm:text-4xl' : 'text-2xl')}>{tr(c.name, locale)}</h3>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-white/80">{tr(c.short, locale)}</p>
-      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold-300">
-        {t.common.explore}
-        <ArrowRight className="flip-rtl size-4 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" aria-hidden />
-      </span>
+    <ol className="border-t border-ink">
+      {categories.map((c, i) => (
+        <li key={c.slug} data-reveal>
+          <Link
+            href={href(locale, `/products/${c.slug}`)}
+            className="group relative grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-rule py-6 transition-colors hover:bg-paper-2 sm:grid-cols-[5rem_1fr_16rem_8rem] sm:py-8 lg:grid-cols-[6rem_1.4fr_1fr_10rem_9rem]"
+          >
+            <span className="label ps-1 text-muted">{roman[i]}.</span>
+            <span className="font-display text-3xl leading-none transition-colors group-hover:text-wax sm:text-5xl lg:text-6xl">{tr(c.name, locale)}</span>
+            <span className="hidden text-sm leading-relaxed text-ink-2 lg:block">{tr(c.short, locale)}</span>
+            <span className="label hidden text-muted sm:block">{String(c.items.length).padStart(2, '0')} {locale === 'ar' ? 'منتجات' : 'lines'}</span>
+            <span className="relative hidden h-20 overflow-hidden border border-ink sm:block lg:h-24">
+              <Img src={c.cover} alt="" fill sizes="10rem" className="plate-img object-cover" />
+            </span>
+            <span className="label flex items-center gap-2 text-wax sm:hidden"><Arrow /></span>
+            <span className="sr-only">{t.common.explore}</span>
+          </Link>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+/** Specimen plate card, used on the products page and "other categories". */
+export function CategoryCard({ c, locale, index }: { c: Category; locale: Locale; index: number }) {
+  const t = getDict(locale)
+  return (
+    <Link data-reveal href={href(locale, `/products/${c.slug}`)} className="group block">
+      <div className="relative aspect-[4/5] overflow-hidden border border-ink bg-paper-2">
+        <Img src={c.cover} alt="" fill sizes="(min-width:1024px) 30vw, (min-width:640px) 50vw, 100vw" className="plate-img object-cover group-hover:scale-[1.03]" />
+        <span className="label absolute start-0 top-0 bg-paper px-3 py-2">{locale === 'ar' ? 'لوحة' : 'Plate'} {roman[index]}</span>
+      </div>
+      <div className="mt-4 flex items-start justify-between gap-4 border-b border-rule pb-4">
+        <div>
+          <h3 className="font-display text-3xl leading-tight group-hover:text-wax">{tr(c.name, locale)}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-ink-2">{tr(c.short, locale)}</p>
+        </div>
+        <span className="label mt-2 flex shrink-0 items-center gap-2 text-wax">{t.common.explore} <Arrow /></span>
+      </div>
     </Link>
   )
 }
 
-export function StatsBand({ locale }: { locale: Locale }) {
+/** "Particulars" — the house's facts, set as a ledger instead of a stats band. */
+export function Particulars({ locale, light }: { locale: Locale; light?: boolean }) {
+  const ar = locale === 'ar'
+  const rows: [string, string, string?][] = [
+    [ar ? 'تأسست' : 'Established', String(site.foundedYear), ar ? 'بيرينتالمانا، كيرالا' : 'Perinthalmanna, Kerala'],
+    [ar ? 'المنشأ' : 'Origin', ar ? 'ساحل مالابار' : 'Malabar Coast', `${site.address.geo.lat.toFixed(4)}°N, ${site.address.geo.lng.toFixed(4)}°E`],
+    [ar ? 'الفئات' : 'Categories', '07', ar ? 'توابل، شاي وقهوة، عسل، والمزيد' : 'Spices, tea & coffee, honey & more'],
+    [ar ? 'منفذ التصدير' : 'Gateway', ar ? 'كوتشين' : 'Cochin', ar ? 'بحرًا وجوًا' : 'Sea & air freight'],
+    [ar ? 'الشروط' : 'Terms', 'FOB · CIF', ar ? 'وشروط أخرى عند الطلب' : 'Others on request'],
+    [ar ? 'الرد' : 'Response', ar ? '24 ساعة' : '24 h', ar ? 'واتساب والبريد الإلكتروني' : 'WhatsApp & email'],
+  ]
   return (
-    <section className="relative overflow-hidden bg-forest-800 py-14 text-white">
-      <div aria-hidden className="grain absolute inset-0" />
-      <Container className="relative">
-        <dl className="grid grid-cols-2 gap-y-10 lg:grid-cols-4">
-          {stats.map((s, i) => (
-            <div key={i} data-reveal className="flex flex-col border-white/15 px-4 text-center lg:border-s lg:first:border-s-0">
-              <dt className="order-2 mt-2 text-sm text-white/70">{tr(s.label, locale)}</dt>
-              <dd className="font-display text-4xl text-gold-300 sm:text-5xl" dir="ltr">{s.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </Container>
-    </section>
+    <dl className={cx('border-t', light ? 'border-paper/50' : 'border-ink')}>
+      {rows.map(([k, v, note]) => (
+        <div key={k} data-reveal className={cx('grid grid-cols-[7rem_1fr] items-baseline gap-4 border-b py-4 sm:grid-cols-[10rem_1fr_1fr]', light ? 'border-paper/20' : 'border-rule')}>
+          <dt className={cx('label', light ? 'text-paper/55' : 'text-muted')}>{k}</dt>
+          <dd className="font-display text-3xl leading-none sm:text-4xl" dir="auto">{v}</dd>
+          {note && <dd className={cx('col-start-2 text-sm sm:col-start-3', light ? 'text-paper/65' : 'text-ink-2')}>{note}</dd>}
+        </div>
+      ))}
+    </dl>
   )
 }
 
-export function ProcessSteps({ locale }: { locale: Locale }) {
+export function ProcessSteps({ locale, light }: { locale: Locale; light?: boolean }) {
   return (
-    <ol className="relative grid gap-6 md:grid-cols-5">
-      <span aria-hidden className="absolute inset-x-[10%] top-8 hidden h-px bg-gradient-to-r from-transparent via-saffron-400/60 to-transparent md:block" />
+    <ol className={cx('grid border-t sm:grid-cols-2 lg:grid-cols-5', light ? 'border-paper/50' : 'border-ink')}>
       {process.map((s, i) => (
-        <li key={i} data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="relative text-center">
-          <span className="relative mx-auto grid size-16 place-items-center rounded-2xl bg-white text-forest-800 shadow-md ring-1 ring-line">
-            <Icon name={s.icon} className="size-7" />
-            <span className="absolute -end-2 -top-2 grid size-6 place-items-center rounded-full bg-saffron-500 text-xs font-bold text-forest-950">{i + 1}</span>
-          </span>
-          <h3 className="mt-5 font-display text-xl text-forest-900">{tr(s.title, locale)}</h3>
-          <p className="mx-auto mt-2 max-w-[16rem] text-sm leading-relaxed text-muted">{tr(s.body, locale)}</p>
+        <li
+          key={i}
+          data-reveal
+          style={{ transitionDelay: `${i * 70}ms` }}
+          className={cx('border-b py-8 pe-6 lg:border-b-0 lg:border-e lg:px-6 lg:first:ps-0 lg:last:border-e-0', light ? 'border-paper/20' : 'border-rule')}
+        >
+          <p className={cx('font-display text-6xl leading-none', light ? 'text-paper/30' : 'text-wax')} dir="ltr">{String(i + 1).padStart(2, '0')}</p>
+          <h3 className="mt-6 font-display text-2xl">{tr(s.title, locale)}</h3>
+          <p className={cx('mt-3 text-sm leading-relaxed', light ? 'text-paper/65' : 'text-ink-2')}>{tr(s.body, locale)}</p>
         </li>
       ))}
     </ol>
@@ -78,51 +103,52 @@ export function ProcessSteps({ locale }: { locale: Locale }) {
 export function CtaBand({ locale, title, body }: { locale: Locale; title?: string; body?: string }) {
   const t = getDict(locale)
   return (
-    <section className="bg-cream py-20 sm:py-24">
-      <Container>
-        <div data-reveal className="relative isolate overflow-hidden rounded-[2rem] bg-forest-900 px-6 py-14 text-white sm:px-14 sm:py-16">
-          <Img src="/images/hero/spice-harvest.webp" alt="" fill sizes="100vw" className="-z-20 object-cover opacity-35" />
-          <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950 via-forest-900/90 to-forest-900/40 rtl:bg-gradient-to-l" />
-          <div className="max-w-2xl">
-            <h2 className="font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">{title ?? t.home.ctaTitle}</h2>
-            <p className="mt-5 text-lg text-white/75">{body ?? t.home.ctaBody}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={href(locale, '/quote')}>{t.common.requestQuote}<ArrowRight className="flip-rtl size-4" aria-hidden /></ButtonLink>
-              <ButtonLink href={waLink()} external variant="ghost-light"><WhatsAppIcon className="size-4" />{t.common.whatsappUs}</ButtonLink>
-            </div>
+    <section className="relative overflow-hidden bg-wax text-paper">
+      <Container className="relative grid gap-10 py-20 sm:py-24 lg:grid-cols-12 lg:items-center">
+        <div className="lg:col-span-8">
+          <RunningHead light>{locale === 'ar' ? 'طلب عرض سعر' : 'Request for quotation'}</RunningHead>
+          <h2 data-reveal className="mt-8 text-balance font-display text-5xl leading-[1] sm:text-7xl">{title ?? t.home.ctaTitle}</h2>
+          <p className="mt-6 max-w-xl font-serif text-lg text-paper/80">{body ?? t.home.ctaBody}</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <ButtonLink href={href(locale, '/quote')} className="bg-paper !text-ink hover:bg-ink hover:!text-paper">{t.common.requestQuote} <Arrow /></ButtonLink>
+            <ButtonLink href={waLink()} external variant="line-light">{t.common.whatsappUs}</ButtonLink>
           </div>
+        </div>
+        <div className="hidden justify-center lg:col-span-4 lg:flex">
+          <Seal size={260} className="text-ink" text={locale === 'ar' ? 'SAACO GLOBAL · EXPORT HOUSE · KERALA · INDIA · ' : 'SAACO GLOBAL · EXPORT HOUSE · KERALA · INDIA · '} />
         </div>
       </Container>
     </section>
   )
 }
 
-export function PartnersMarquee() {
-  const row = [...partners, ...partners]
+export function PartnersGrid() {
   return (
-    <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-      <ul className="flex w-max animate-marquee items-center gap-6 hover:[animation-play-state:paused]">
-        {row.map((p, i) => (
-          <li key={i} aria-hidden={i >= partners.length} className="grid h-28 w-48 shrink-0 place-items-center rounded-2xl bg-white px-6 ring-1 ring-line">
-            <Img src={p.logo} alt={i < partners.length ? p.name : ''} sizes="192px" className="max-h-20 w-auto object-contain" />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="grid grid-cols-2 border-s border-t border-ink sm:grid-cols-4">
+      {partners.map((p) => (
+        <li key={p.name} data-reveal className="group flex flex-col justify-between border-b border-e border-ink bg-paper">
+          <div className="grid h-32 place-items-center p-6 sm:h-40">
+            <Img src={p.logo} alt={p.name} sizes="200px" className="max-h-20 w-auto object-contain mix-blend-multiply grayscale transition duration-500 group-hover:grayscale-0 sm:max-h-24" />
+          </div>
+          <p className="label border-t border-rule px-4 py-2 text-muted">{p.name}</p>
+        </li>
+      ))}
+    </ul>
   )
 }
 
 export function FaqList({ locale, limit }: { locale: Locale; limit?: number }) {
   const list = limit ? faqs.slice(0, limit) : faqs
   return (
-    <div className="divide-y divide-line rounded-3xl bg-white ring-1 ring-line">
+    <div className="border-t border-ink">
       {list.map((f, i) => (
-        <details key={i} className="group p-6 sm:p-7 [&_summary::-webkit-details-marker]:hidden" open={i === 0}>
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 font-display text-lg text-forest-900 sm:text-xl">
-            {tr(f.q, locale)}
-            <Plus aria-hidden className="mt-1 size-5 shrink-0 text-saffron-600 transition-transform group-open:rotate-45" />
+        <details key={i} className="group border-b border-rule [&_summary::-webkit-details-marker]:hidden" open={i === 0}>
+          <summary className="grid cursor-pointer list-none grid-cols-[3rem_1fr_auto] items-baseline gap-4 py-6">
+            <span className="label text-muted">Q.{String(i + 1).padStart(2, '0')}</span>
+            <span className="font-display text-2xl leading-snug group-hover:text-wax sm:text-[1.7rem]">{tr(f.q, locale)}</span>
+            <span aria-hidden className="font-mono text-xl text-wax transition-transform group-open:rotate-45">+</span>
           </summary>
-          <p className="mt-4 max-w-3xl leading-relaxed text-muted">{tr(f.a, locale)}</p>
+          <p className="max-w-3xl pb-8 ps-16 font-serif text-[1.0625rem] leading-relaxed text-ink-2">{tr(f.a, locale)}</p>
         </details>
       ))}
     </div>

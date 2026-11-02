@@ -44,7 +44,7 @@ async function jpg(rel, width = 1200) {
   const buf = await sharp(path.join(root, 'public', rel)).resize({ width, withoutEnlargement: true }).jpeg({ quality: 72 }).toBuffer()
   return doc.embedJpg(buf)
 }
-const logo = await doc.embedPng(fs.readFileSync(path.join(root, 'public/images/brand/logo-wide.png')))
+const logo = await doc.embedPng(fs.readFileSync(path.join(root, 'public/images/brand/saaco-logo.png')))
 
 function wrap(text, font, size, maxW) {
   const words = safe(text).split(/\s+/)
@@ -81,8 +81,8 @@ function footer(page) {
   const hero = await jpg('/images/hero/spice-harvest.webp', 1400)
   cover(p, hero, 0, 0, W, H)
   p.drawRectangle({ x: 0, y: 0, width: W, height: H, color: C.forest, opacity: 0.78 })
-  p.drawRectangle({ x: M, y: H - 150, width: 180, height: 90, color: C.white })
-  p.drawImage(logo, { x: M + 10, y: H - 145, width: 160, height: 80 })
+  p.drawRectangle({ x: M, y: H - 168, width: 228, height: 118, color: C.cream })
+  p.drawImage(logo, { x: M + 10, y: H - 160, width: 208, height: 208 * 306 / 660 })
   p.drawText('PRODUCT CATALOGUE', { x: M, y: 420, size: 11, font: bold, color: C.gold })
   p.drawLine({ start: { x: M, y: 410 }, end: { x: M + 60, y: 410 }, thickness: 2, color: C.saffron })
   let y = 360

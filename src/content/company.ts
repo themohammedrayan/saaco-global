@@ -23,7 +23,7 @@ export const services: { id: string; icon: IconName; image: string; title: L; bo
   {
     id: 'packaging',
     icon: 'package',
-    image: '/images/services/packaging.webp',
+    image: '/images/honey-coconut-oil/duo.webp',
     title: { en: 'Packaging & Private Label', ar: 'التغليف والعلامة الخاصة' },
     body: {
       en: 'From 25–50 kg export sacks to retail-ready pouches carrying your brand, we pack to protect aroma and freshness and to meet the labelling rules of your destination market.',
@@ -38,7 +38,7 @@ export const services: { id: string; icon: IconName; image: string; title: L; bo
   {
     id: 'delivery',
     icon: 'truck',
-    image: '/images/services/delivery.webp',
+    image: '/images/plates/delivery.webp',
     title: { en: 'Logistics & Delivery', ar: 'الخدمات اللوجستية والتسليم' },
     body: {
       en: 'We coordinate inland transport, export documentation and booking with freight partners, and keep you updated from packing to departure — by sea or air.',

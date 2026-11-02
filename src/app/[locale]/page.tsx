@@ -1,16 +1,15 @@
-import { ArrowRight, Check, Download } from 'lucide-react'
 import { href, tr } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { categories } from '@/content/products'
 import { markets, pillars, services, timeline } from '@/content/company'
 import { site } from '@/content/site'
-import { pageMeta } from '@/lib/seo'
-import { Icon } from '@/components/Icon'
-import { Img } from '@/components/Img'
-import { CategoryCard, CtaBand, FaqList, PartnersMarquee, ProcessSteps, StatsBand } from '@/components/sections'
-import { WorldMap } from '@/components/WorldMap'
-import { ButtonLink, Container, Section, SectionHeading } from '@/components/ui'
 import { getLocale } from '@/lib/locale'
+import { pageMeta } from '@/lib/seo'
+import { Img } from '@/components/Img'
+import { AddToQuote } from '@/components/AddToQuote'
+import { CategoryIndex, CtaBand, FaqList, Particulars, PartnersGrid, ProcessSteps } from '@/components/sections'
+import { WorldMap } from '@/components/WorldMap'
+import { Arrow, ButtonLink, Container, RunningHead, Seal, Section, SectionHeading } from '@/components/ui'
 
 export async function generateMetadata({ params }: PageProps<'/[locale]'>) {
   const locale = await getLocale(params)
@@ -23,188 +22,217 @@ export async function generateMetadata({ params }: PageProps<'/[locale]'>) {
 export default async function Home({ params }: PageProps<'/[locale]'>) {
   const locale = await getLocale(params)
   const t = getDict(locale)
-  const [lead, ...rest] = categories
+  const g = t.ledger
+  const spices = categories[0]
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-forest-950 pb-16 pt-32 text-white sm:items-center sm:pb-24">
-        <Img src="/images/hero/spice-harvest.webp" alt="" fill priority sizes="100vw" className="-z-20 object-cover object-center" />
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/95 via-forest-950/75 to-forest-950/20 rtl:bg-gradient-to-l" />
-        <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-forest-950/80 to-transparent" />
+      {/* ───────────── FRONT PAGE ───────────── */}
+      <section className="paper-grain border-b border-ink">
         <Container>
-          <div className="max-w-3xl">
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gold-300 backdrop-blur">
-              <span className="size-1.5 rounded-full bg-saffron-400" aria-hidden /> {t.home.eyebrow}
-            </p>
-            <h1 className="font-display text-[2.6rem] leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">{t.home.heroTitle}</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">{t.home.heroBody}</p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <ButtonLink href={href(locale, '/quote')} className="px-7 py-3.5 text-base">
-                {t.common.requestQuote} <ArrowRight className="flip-rtl size-4" aria-hidden />
-              </ButtonLink>
-              <ButtonLink href={href(locale, '/products')} variant="ghost-light" className="px-7 py-3.5 text-base">{t.common.viewProducts}</ButtonLink>
-              <a href="/catalogue/saaco-global-catalogue.pdf" download className="inline-flex items-center gap-2 px-3 py-3.5 text-sm font-semibold text-white/80 underline-offset-4 hover:text-white hover:underline">
-                <Download className="size-4" aria-hidden /> {t.common.downloadCatalogue}
-              </a>
+          <div className="label flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-rule py-3 text-muted">
+            <span>{g.meta}</span>
+            <span className="hidden sm:inline">{g.place}</span>
+            <span dir="ltr">{site.address.geo.lat.toFixed(4)}°N · {site.address.geo.lng.toFixed(4)}°E</span>
+          </div>
+
+          <div className="grid gap-12 pb-14 pt-10 sm:pt-14 lg:grid-cols-12 lg:gap-10 lg:pb-20">
+            <div className="lg:col-span-7 lg:pt-6">
+              <h1 className="font-display text-[3.4rem] leading-[0.92] tracking-[-0.02em] sm:text-8xl lg:text-[7.4rem]">
+                {g.heroA}{' '}
+                <em className="font-serif italic text-wax">{g.heroB}</em>{' '}
+                {g.heroC}
+              </h1>
+              <p className="mt-10 max-w-xl font-serif text-lg leading-relaxed text-ink-2 sm:text-xl">{g.heroBody}</p>
+              <div className="mt-10 flex flex-wrap items-center gap-3">
+                <ButtonLink href={href(locale, '/quote')}>{t.common.requestQuote} <Arrow /></ButtonLink>
+                <ButtonLink href={href(locale, '/products')} variant="line">{t.common.viewProducts}</ButtonLink>
+                <a href="/catalogue/saaco-global-catalogue.pdf" download className="label ink-link ms-2 text-ink-2 hover:text-wax">
+                  {t.common.downloadCatalogue} (PDF)
+                </a>
+              </div>
             </div>
-            <ul className="mt-12 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-3 text-sm text-white/85 sm:flex sm:flex-wrap sm:gap-x-8">
-              {t.home.trust.map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check className="size-4 text-saffron-400" aria-hidden />{x}</li>
-              ))}
-            </ul>
+
+            <figure className="relative lg:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden border border-ink bg-paper-2">
+                <Img src="/images/hero/spice-harvest.webp" alt={g.fig1} fill priority sizes="(min-width:1024px) 40vw, 100vw" className="plate-img object-cover" />
+              </div>
+              <figcaption className="label mt-3 flex justify-between gap-4 text-muted">
+                <span>{g.fig1}</span><span dir="ltr">SAACO · KL</span>
+              </figcaption>
+              <Seal className="absolute -top-12 -start-8 hidden drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] sm:block lg:-start-14" size={140} text="SAACO GLOBAL · EXPORT HOUSE · KERALA · INDIA · " />
+            </figure>
+          </div>
+
+          {/* Lot sheet: immediately actionable, reads like a trade document */}
+          <div className="pb-16">
+            <RunningHead no="00">{g.lotSheet}</RunningHead>
+            <div className="relative mt-4">
+              <table className="w-full text-start text-sm">
+                <thead>
+                  <tr className="label border-b border-ink text-muted">
+                    {g.lotCols.map((c, k) => <th key={c} scope="col" className={`py-3 pe-4 text-start font-normal ${k === 2 || k === 3 ? 'hidden md:table-cell' : k === 4 ? 'hidden sm:table-cell' : ''}`}>{c}</th>)}
+                    <th scope="col" className="py-3 text-end font-normal"><span className="sr-only">{t.products.addToQuote}</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {spices.items.slice(0, 5).map((i, n) => (
+                    <tr key={i.id} className="ledger-row">
+                      <td className="label py-4 pe-4 text-muted"><span dir="ltr">SG-{String(n + 1).padStart(3, '0')}</span></td>
+                      <th scope="row" className="py-4 pe-4 text-start font-display text-xl font-normal sm:text-2xl">{tr(i.name, locale)}</th>
+                      <td className="hidden py-4 pe-4 font-serif italic text-ink-2 md:table-cell"><span dir="ltr">{i.latin}</span></td>
+                      <td className="hidden py-4 pe-4 text-ink-2 md:table-cell">{tr(i.forms, locale)}</td>
+                      <td className="hidden py-4 pe-4 font-mono text-xs sm:table-cell"><span dir="ltr">{i.hs}</span></td>
+                      <td className="py-3 text-end"><AddToQuote locale={locale} id={i.id} name={i.name.en} category={spices.name.en} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* OUR FARM */}
-      <Section tone="cream">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
-          <div data-reveal className="relative">
-            <div className="grid grid-cols-5 grid-rows-6 gap-4" style={{ aspectRatio: '1 / 1' }}>
-              <div className="relative col-span-3 row-span-4 overflow-hidden rounded-3xl">
-                <Img src="/images/tea-coffee/tea-leaves.webp" alt={locale === 'ar' ? 'أوراق الشاي من مرتفعات كيرالا' : 'Tea from the Kerala highlands'} fill sizes="(min-width:1024px) 30vw, 60vw" className="object-cover" />
-              </div>
-              <div className="relative col-span-2 row-span-3 overflow-hidden rounded-3xl">
-                <Img src="/images/vegetables-fruits/coconut.webp" alt={locale === 'ar' ? 'جوز الهند الطازج' : 'Fresh coconuts'} fill sizes="(min-width:1024px) 20vw, 40vw" className="object-cover" />
-              </div>
-              <div className="relative col-span-2 row-span-3 overflow-hidden rounded-3xl">
-                <Img src="/images/vegetables-fruits/basket.webp" alt={locale === 'ar' ? 'سلة خضروات طازجة' : 'Basket of fresh vegetables'} fill sizes="(min-width:1024px) 20vw, 40vw" className="object-cover" />
-              </div>
-              <div className="col-span-3 row-span-2 flex flex-col justify-center rounded-3xl bg-forest-800 p-6 text-white">
-                <p className="font-display text-4xl text-gold-300" dir="ltr">{site.foundedYear}</p>
-                <p className="mt-1 text-sm text-white/75">{locale === 'ar' ? 'نعمل مع مزارعي مالابار' : 'Working with Malabar farmers since'}</p>
-              </div>
+      {/* ───────────── § 01 INDEX ───────────── */}
+      <Section>
+        <SectionHeading no="01" kicker={g.index} title={g.indexTitle} body={t.home.productsBody} />
+        <CategoryIndex locale={locale} />
+        <div className="mt-10">
+          <ButtonLink href={href(locale, '/products')} variant="line">{g.fullIndex} <Arrow /></ButtonLink>
+        </div>
+      </Section>
+
+      {/* ───────────── § 02 THE HOUSE ───────────── */}
+      <Section tone="paper-2" className="border-y border-ink">
+        <SectionHeading no="02" kicker={g.house} title={t.home.farmTitle} />
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="relative aspect-[3/4] overflow-hidden border border-ink">
+              <Img src="/images/vegetables-fruits/basket.webp" alt="" fill sizes="(min-width:1024px) 35vw, 100vw" className="plate-img object-cover" />
             </div>
+            <p className="label mt-3 text-muted">{locale === 'ar' ? 'شكل 2 — من مزارع موثوقة' : 'Fig. 2 — From trusted farms'}</p>
           </div>
-          <div>
-            <SectionHeading eyebrow={t.home.farmEyebrow} title={t.home.farmTitle} body={t.home.farmBody} />
-            <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+          <div className="lg:col-span-7">
+            <p data-reveal className="font-serif text-xl leading-relaxed text-ink-2 first-letter:float-start first-letter:me-3 first-letter:font-display first-letter:text-[5.5rem] first-letter:leading-[0.8] first-letter:text-wax sm:text-2xl rtl:first-letter:float-none rtl:first-letter:me-0 rtl:first-letter:text-inherit">
+              {t.home.farmBody}
+            </p>
+            <blockquote data-reveal className="my-12 border-y border-ink py-8 font-display text-4xl leading-tight sm:text-5xl">
+              {g.pull}
+            </blockquote>
+            <dl className="grid gap-px border border-ink bg-ink sm:grid-cols-2">
               {pillars.map((p, i) => (
-                <li key={i} data-reveal className="flex gap-4">
-                  <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-forest-100 text-forest-800"><Icon name={p.icon} className="size-6" /></span>
+                <div key={i} className="bg-paper-2 p-6">
+                  <dt className="flex items-baseline gap-3">
+                    <span className="label text-wax">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="font-display text-2xl">{tr(p.title, locale)}</span>
+                  </dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-ink-2">{tr(p.body, locale)}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </Section>
+
+      {/* ───────────── § 03 PARTICULARS + SERVICES ───────────── */}
+      <Section>
+        <div className="grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <RunningHead no="03">{g.particulars}</RunningHead>
+            <div className="mt-8"><Particulars locale={locale} /></div>
+          </div>
+          <div className="lg:col-span-6">
+            <RunningHead>{t.home.servicesEyebrow}</RunningHead>
+            <ol className="mt-8 border-t border-ink">
+              {services.map((s, i) => (
+                <li key={s.id} data-reveal className="grid grid-cols-[1fr_8rem] gap-6 border-b border-rule py-6 sm:grid-cols-[1fr_10rem]">
                   <div>
-                    <h3 className="font-semibold text-forest-900">{tr(p.title, locale)}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">{tr(p.body, locale)}</p>
+                    <p className="label text-wax">{roman(i)}</p>
+                    <h3 className="mt-2 font-display text-3xl">{tr(s.title, locale)}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-ink-2">{tr(s.body, locale)}</p>
+                  </div>
+                  <div className="relative aspect-square overflow-hidden border border-ink">
+                    <Img src={s.image} alt="" fill sizes="10rem" className="plate-img object-cover" />
                   </div>
                 </li>
               ))}
-            </ul>
+            </ol>
+            <ButtonLink href={href(locale, '/services')} variant="line" className="mt-8">{t.nav.services} <Arrow /></ButtonLink>
           </div>
         </div>
       </Section>
 
-      {/* PRODUCTS */}
-      <Section tone="sand">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading eyebrow={t.home.productsEyebrow} title={t.home.productsTitle} body={t.home.productsBody} />
-          <ButtonLink href={href(locale, '/products')} variant="outline" className="shrink-0">
-            {t.common.allProducts} <ArrowRight className="flip-rtl size-4" aria-hidden />
-          </ButtonLink>
-        </div>
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          <CategoryCard c={lead} locale={locale} large />
-          <div className="grid gap-5 sm:grid-cols-2">
-            {rest.slice(0, 2).map((c) => <CategoryCard key={c.slug} c={c} locale={locale} />)}
-            {rest.slice(2, 4).map((c) => <CategoryCard key={c.slug} c={c} locale={locale} />)}
-          </div>
-        </div>
-        <div className="mt-5 grid gap-5 sm:grid-cols-2">
-          {rest.slice(4).map((c) => <CategoryCard key={c.slug} c={c} locale={locale} />)}
-        </div>
+      {/* ───────────── § 04 TERMS ───────────── */}
+      <Section tone="night">
+        <SectionHeading no="04" kicker={g.terms} title={t.home.processTitle} light>
+          <ButtonLink href={href(locale, '/export')} variant="line-light" className="mt-2">{t.nav.export} <Arrow /></ButtonLink>
+        </SectionHeading>
+        <ProcessSteps locale={locale} light />
       </Section>
 
-      <StatsBand locale={locale} />
-
-      {/* SERVICES */}
-      <Section tone="cream">
-        <SectionHeading eyebrow={t.home.servicesEyebrow} title={t.home.servicesTitle} center />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {services.map((s) => (
-            <article key={s.id} data-reveal className="group overflow-hidden rounded-3xl bg-white ring-1 ring-line transition-shadow hover:shadow-xl hover:shadow-forest-900/5">
-              <div className="relative aspect-[4/3] overflow-hidden bg-sand">
-                <Img src={s.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="p-7">
-                <span className="-mt-14 mb-5 grid size-14 place-items-center rounded-2xl bg-saffron-500 text-forest-950 shadow-lg ring-4 ring-white relative"><Icon name={s.icon} className="size-6" /></span>
-                <h3 className="font-display text-2xl text-forest-900">{tr(s.title, locale)}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{tr(s.body, locale)}</p>
-                <ButtonLink href={href(locale, '/quote')} variant="outline" className="mt-6 px-5 py-2.5">{t.common.requestQuote}</ButtonLink>
-              </div>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      {/* PROCESS */}
-      <Section tone="white">
-        <SectionHeading eyebrow={t.home.processEyebrow} title={t.home.processTitle} center className="mb-14" />
-        <ProcessSteps locale={locale} />
-        <div className="mt-12 text-center">
-          <ButtonLink href={href(locale, '/export')} variant="outline">{t.nav.export} <ArrowRight className="flip-rtl size-4" aria-hidden /></ButtonLink>
-        </div>
-      </Section>
-
-      {/* MARKETS */}
-      <section className="relative overflow-hidden bg-forest-950 py-20 text-white sm:py-28">
-        <div aria-hidden className="grain absolute inset-0" />
-        <Container className="relative">
-          <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.6fr]">
-            <div>
-              <SectionHeading light eyebrow={t.home.marketsEyebrow} title={t.home.marketsTitle} body={t.home.marketsBody} />
-              <ul className="mt-8 grid grid-cols-2 gap-3 text-sm">
-                {markets.map((m) => (
-                  <li key={m.id} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5">
-                    <span className="size-2 rounded-full bg-gold-300" aria-hidden />{tr(m.name, locale)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div data-reveal><WorldMap locale={locale} /></div>
-          </div>
-        </Container>
-      </section>
-
-      {/* PARTNERS */}
-      <section className="bg-cream py-20">
-        <Container>
-          <SectionHeading eyebrow={t.home.partnersEyebrow} title={t.home.partnersTitle} center className="mb-12" />
-        </Container>
-        <PartnersMarquee />
-      </section>
-
-      {/* STORY */}
-      <Section tone="sand">
-        <div className="grid gap-14 lg:grid-cols-2">
-          <div>
-            <SectionHeading eyebrow={t.home.storyEyebrow} title={t.home.storyTitle} body={t.home.storyBody} />
-            <ButtonLink href={href(locale, '/about')} variant="outline" className="mt-8">{t.common.learnMore} <ArrowRight className="flip-rtl size-4" aria-hidden /></ButtonLink>
-          </div>
-          <ol className="relative space-y-8 border-s-2 border-saffron-400/50 ps-8">
-            {timeline.map((s) => (
-              <li key={s.year} data-reveal className="relative">
-                <span aria-hidden className="absolute -start-[2.6rem] top-1 size-4 rounded-full border-4 border-sand bg-saffron-500" />
-                <p className="font-display text-2xl text-saffron-600" dir="ltr">{s.year}</p>
-                <h3 className="mt-1 font-semibold text-forest-900">{tr(s.title, locale)}</h3>
-                <p className="mt-2 leading-relaxed text-muted">{tr(s.body, locale)}</p>
+      {/* ───────────── § 05 ROUTES ───────────── */}
+      <Section className="border-b border-ink">
+        <SectionHeading no="05" kicker={g.routes} title={t.home.marketsTitle} body={g.routesNote} />
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-8"><WorldMap locale={locale} /></div>
+          <ol className="border-t border-ink lg:col-span-4">
+            <li className="flex items-baseline justify-between border-b border-rule py-3">
+              <span className="font-display text-xl text-wax">{locale === 'ar' ? 'كوتشين، كيرالا' : 'Cochin, Kerala'}</span>
+              <span className="label text-muted">{locale === 'ar' ? 'المنشأ' : 'Origin'}</span>
+            </li>
+            {markets.map((m, i) => (
+              <li key={m.id} className="flex items-baseline justify-between border-b border-rule py-3">
+                <span className="flex items-baseline gap-3">
+                  <span className="label text-muted">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="font-display text-xl">{tr(m.name, locale)}</span>
+                </span>
+                <span className="label text-muted" dir="ltr">{Math.abs(m.lat).toFixed(0)}°{m.lat >= 0 ? 'N' : 'S'} {Math.abs(m.lon).toFixed(0)}°{m.lon >= 0 ? 'E' : 'W'}</span>
               </li>
             ))}
           </ol>
         </div>
       </Section>
 
-      {/* FAQ preview */}
-      <Section tone="cream">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
-          <div>
-            <SectionHeading eyebrow={t.faq.eyebrow} title={t.faq.title} body={t.faq.body} />
-            <ButtonLink href={href(locale, '/faq')} variant="outline" className="mt-8">{t.nav.faq} <ArrowRight className="flip-rtl size-4" aria-hidden /></ButtonLink>
+      {/* ───────────── § 06 CORRESPONDENTS ───────────── */}
+      <Section>
+        <SectionHeading no="06" kicker={g.correspondents} title={t.home.partnersTitle} />
+        <PartnersGrid />
+      </Section>
+
+      {/* ───────────── § 07 CHRONICLE ───────────── */}
+      <Section tone="paper-2" className="border-y border-ink">
+        <SectionHeading no="07" kicker={g.chronicle} title={t.home.storyTitle} body={t.home.storyBody}>
+          <ButtonLink href={href(locale, '/about')} variant="line" className="mt-6">{t.common.learnMore} <Arrow /></ButtonLink>
+        </SectionHeading>
+        <ol className="grid border-t border-ink md:grid-cols-3">
+          {timeline.map((s) => (
+            <li key={s.year} data-reveal className="border-b border-rule py-8 md:border-b-0 md:border-e md:px-8 md:first:ps-0 md:last:border-e-0">
+              <p className="font-display text-7xl leading-none text-wax sm:text-8xl" dir="ltr">{s.year}</p>
+              <h3 className="mt-6 font-display text-2xl">{tr(s.title, locale)}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-2">{tr(s.body, locale)}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* ───────────── § 08 ENQUIRIES ───────────── */}
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <RunningHead no="08">{g.enquiries}</RunningHead>
+            <h2 className="mt-8 font-display text-5xl leading-[1.02] sm:text-6xl">{t.faq.title}</h2>
+            <p className="mt-6 font-serif text-lg text-ink-2">{t.faq.body}</p>
+            <ButtonLink href={href(locale, '/faq')} variant="line" className="mt-8">{t.nav.faq} <Arrow /></ButtonLink>
           </div>
-          <FaqList locale={locale} limit={4} />
+          <div className="lg:col-span-8"><FaqList locale={locale} limit={5} /></div>
         </div>
       </Section>
 
       <CtaBand locale={locale} />
     </>
   )
+}
+
+function roman(i: number) {
+  return ['I', 'II', 'III', 'IV', 'V'][i] ?? String(i + 1)
 }

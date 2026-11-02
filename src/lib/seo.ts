@@ -41,7 +41,7 @@ export function organizationLd(locale: Locale) {
         '@id': `${site.url}/#org`,
         name: site.name,
         url: site.url,
-        logo: `${site.url}/images/brand/emblem.png`,
+        logo: `${site.url}/images/brand/saaco-logo.png`,
         email: site.contact.email,
         telephone: site.contact.phoneE164,
         foundingDate: String(site.foundedYear),

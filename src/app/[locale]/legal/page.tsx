@@ -18,8 +18,8 @@ export default async function LegalPage({ params }: PageProps<'/[locale]/legal'>
   const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} title={t.footer.legal} crumbs={[{ label: t.footer.legal }]} />
-      <Section tone="cream">
+      <PageHero locale={locale} no="L-1" title={t.footer.legal} crumbs={[{ label: t.footer.legal }]} />
+      <Section>
         <Prose>
           <h2>{ar ? 'مشغّل الموقع' : 'Website operator'}</h2>
           <p>

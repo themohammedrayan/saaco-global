@@ -57,6 +57,15 @@ export const site = {
   certifications: [] as { name: string; number?: string }[],
 }
 
+/** Countries shown in the centre of the footer bar. Order as given by the business. */
+export const countries: { code: string; name: L; region: L }[] = [
+  { code: 'IN', name: { en: 'India', ar: 'الهند' }, region: { en: 'Kerala · Head office', ar: 'كيرالا · المقر الرئيسي' } },
+  { code: 'BH', name: { en: 'Bahrain', ar: 'البحرين' }, region: { en: 'GCC', ar: 'دول الخليج' } },
+  { code: 'LK', name: { en: 'Sri Lanka', ar: 'سريلانكا' }, region: { en: 'South Asia', ar: 'جنوب آسيا' } },
+  { code: 'SA', name: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' }, region: { en: 'GCC', ar: 'دول الخليج' } },
+  { code: 'AE', name: { en: 'UAE', ar: 'الإمارات' }, region: { en: 'GCC', ar: 'دول الخليج' } },
+]
+
 export const stats: { value: string; label: L }[] = [
   { value: '7', label: { en: 'Product categories', ar: 'فئات منتجات' } },
   { value: String(site.foundedYear), label: { en: 'Roots in Kerala since', ar: 'جذورنا في كيرالا منذ' } },

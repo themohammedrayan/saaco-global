@@ -1,4 +1,3 @@
-import { Check } from 'lucide-react'
 import { tr } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { documents, incoterms, paymentTerms, qualitySteps, shippingModes } from '@/content/export'
@@ -6,9 +5,8 @@ import { site } from '@/content/site'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
 import { PageHero } from '@/components/PageHero'
-import { Icon } from '@/components/Icon'
 import { CtaBand, ProcessSteps } from '@/components/sections'
-import { Section, SectionHeading } from '@/components/ui'
+import { RunningHead, Section, SectionHeading } from '@/components/ui'
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/export'>) {
   const locale = await getLocale(params)
@@ -20,80 +18,83 @@ export default async function ExportPage({ params }: PageProps<'/[locale]/export
   const locale = await getLocale(params)
   const t = getDict(locale)
   const g = t.exportGuide
+  const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} eyebrow={g.eyebrow} title={g.title} body={g.body} image="/images/services/delivery.webp" crumbs={[{ label: t.nav.export }]}>
-        <dl className="mt-10 grid max-w-xl gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/15 bg-white/5 p-4 backdrop-blur">
-            <dt className="text-xs uppercase tracking-widest text-gold-300">{g.gateway}</dt>
-            <dd className="mt-1 font-semibold">{tr(site.port, locale)}</dd>
+      <PageHero locale={locale} no="003" eyebrow={g.eyebrow} title={g.title} body={g.body} image="/images/plates/delivery.webp" caption={ar ? 'شكل — جاهزة للشحن' : 'Fig. — Ready for dispatch'} crumbs={[{ label: t.nav.export }]}>
+        <dl className="mt-10 grid max-w-xl border-t border-ink sm:grid-cols-2">
+          <div className="border-b border-rule py-4 sm:border-e sm:pe-6">
+            <dt className="label text-muted">{g.gateway}</dt>
+            <dd className="mt-1 font-display text-2xl">{tr(site.port, locale)}</dd>
           </div>
-          <div className="rounded-2xl border border-white/15 bg-white/5 p-4 backdrop-blur">
-            <dt className="text-xs uppercase tracking-widest text-gold-300">{locale === 'ar' ? 'الشحن الجوي' : 'Air freight'}</dt>
-            <dd className="mt-1 font-semibold">{tr(site.airport, locale)}</dd>
+          <div className="border-b border-rule py-4 sm:ps-6">
+            <dt className="label text-muted">{ar ? 'الشحن الجوي' : 'Air freight'}</dt>
+            <dd className="mt-1 font-display text-2xl">{tr(site.airport, locale)}</dd>
           </div>
         </dl>
       </PageHero>
 
-      <Section tone="white">
-        <SectionHeading eyebrow={t.home.processEyebrow} title={t.home.processTitle} center className="mb-14" />
+      <Section>
+        <SectionHeading no="01" kicker={t.home.processEyebrow} title={t.home.processTitle} />
         <ProcessSteps locale={locale} />
       </Section>
 
-      <Section tone="cream">
-        <SectionHeading title={g.incoterms} body={g.incotermsNote} />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+      <Section tone="paper-2" className="border-y border-ink">
+        <SectionHeading no="02" kicker={g.incoterms} title={ar ? 'شروط التسليم' : 'Delivery terms'} body={g.incotermsNote} />
+        <div className="grid border-t border-ink md:grid-cols-3">
           {incoterms.map((i) => (
-            <article key={i.code} data-reveal className="rounded-3xl bg-white p-7 ring-1 ring-line">
-              <p className="font-display text-4xl text-saffron-600" dir="ltr">{i.code}</p>
-              <h3 className="mt-2 font-semibold text-forest-900">{tr(i.name, locale)}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{tr(i.body, locale)}</p>
+            <article key={i.code} data-reveal className="border-b border-rule py-8 md:border-b-0 md:border-e md:px-8 md:first:ps-0 md:last:border-e-0">
+              <p className="font-display text-7xl leading-none text-wax" dir="ltr">{i.code}</p>
+              <h3 className="label mt-5 text-ink">{tr(i.name, locale)}</h3>
+              <p className="mt-3 font-serif leading-relaxed text-ink-2">{tr(i.body, locale)}</p>
             </article>
           ))}
         </div>
       </Section>
 
-      <Section tone="sand">
-        <div className="grid gap-14 lg:grid-cols-2">
+      <Section>
+        <div className="grid gap-16 lg:grid-cols-2">
           <div>
-            <SectionHeading title={g.documents} body={g.documentsNote} />
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            <RunningHead no="03">{g.documents}</RunningHead>
+            <p className="mt-6 font-serif text-lg text-ink-2">{g.documentsNote}</p>
+            <ol className="mt-6 border-t border-ink">
               {documents.map((d, i) => (
-                <li key={i} data-reveal className="flex items-center gap-3 rounded-2xl bg-white p-4 ring-1 ring-line">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-forest-100 text-forest-800"><Icon name={d.icon} className="size-5" /></span>
-                  <span className="text-sm font-medium text-forest-900">{tr(d.name, locale)}</span>
+                <li key={i} data-reveal className="ledger-row flex items-baseline gap-5 py-4">
+                  <span className="label text-muted">D.{String(i + 1).padStart(2, '0')}</span>
+                  <span className="font-display text-xl">{tr(d.name, locale)}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
           <div>
-            <SectionHeading title={g.payment} body={g.paymentNote} />
-            <ul className="mt-8 space-y-3">
+            <RunningHead no="04">{g.payment}</RunningHead>
+            <p className="mt-6 font-serif text-lg text-ink-2">{g.paymentNote}</p>
+            <ol className="mt-6 border-t border-ink">
               {paymentTerms.map((p, i) => (
-                <li key={i} data-reveal className="flex gap-3 rounded-2xl bg-white p-4 ring-1 ring-line">
-                  <Check className="mt-0.5 size-5 shrink-0 text-forest-600" aria-hidden />
-                  <span className="text-forest-900">{tr(p, locale)}</span>
+                <li key={i} data-reveal className="ledger-row flex items-baseline gap-5 py-4">
+                  <span className="label text-muted">P.{String(i + 1).padStart(2, '0')}</span>
+                  <span className="font-display text-xl">{tr(p, locale)}</span>
                 </li>
               ))}
-            </ul>
-            <h3 className="mt-12 font-display text-2xl text-forest-900">{g.quality}</h3>
-            <ul className="mt-5 space-y-3">
+            </ol>
+            <RunningHead no="05" className="mt-14">{g.quality}</RunningHead>
+            <ol className="mt-6 space-y-3">
               {qualitySteps.map((q, i) => (
-                <li key={i} className="flex gap-3 text-muted"><Check className="mt-1 size-4 shrink-0 text-saffron-600" aria-hidden />{tr(q, locale)}</li>
+                <li key={i} className="flex gap-4 font-serif text-ink-2"><span className="label pt-1 text-wax">{String(i + 1).padStart(2, '0')}</span>{tr(q, locale)}</li>
               ))}
-            </ul>
+            </ol>
           </div>
         </div>
       </Section>
 
-      <Section tone="forest">
-        <SectionHeading light title={g.shipping} />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+      <Section tone="night">
+        <SectionHeading no="06" kicker={g.shipping} title={ar ? 'بحرًا أو جوًا' : 'By sea or by air'} light />
+        <div className="grid border-t border-paper/50 md:grid-cols-3">
           {shippingModes.map((s, i) => (
-            <article key={i} data-reveal className="rounded-3xl border border-white/10 bg-white/5 p-7">
-              <span className="grid size-12 place-items-center rounded-2xl bg-saffron-500 text-forest-950"><Icon name={s.icon} className="size-6" /></span>
-              <h3 className="mt-5 font-display text-xl">{tr(s.title, locale)}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/70">{tr(s.body, locale)}</p>
+            <article key={i} data-reveal className="border-b border-paper/20 py-8 md:border-b-0 md:border-e md:px-8 md:first:ps-0 md:last:border-e-0">
+              <p className="label text-wax">{String(i + 1).padStart(2, '0')}</p>
+              <h3 className="mt-4 font-display text-3xl">{tr(s.title, locale)}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-paper/65">{tr(s.body, locale)}</p>
             </article>
           ))}
         </div>

@@ -19,9 +19,9 @@ export default async function FaqPage({ params }: PageProps<'/[locale]/faq'>) {
   const t = getDict(locale)
   return (
     <>
-      <PageHero locale={locale} eyebrow={t.faq.eyebrow} title={t.faq.title} body={t.faq.body} image="/images/spices/cardamom-pepper.webp" crumbs={[{ label: t.nav.faq }]} />
-      <Section tone="cream">
-        <div className="mx-auto max-w-4xl"><FaqList locale={locale} /></div>
+      <PageHero locale={locale} no="006" eyebrow={t.faq.eyebrow} title={t.faq.title} body={t.faq.body} crumbs={[{ label: t.nav.faq }]} />
+      <Section>
+        <div className="mx-auto max-w-5xl"><FaqList locale={locale} /></div>
       </Section>
       <CtaBand locale={locale} />
       <JsonLd data={{

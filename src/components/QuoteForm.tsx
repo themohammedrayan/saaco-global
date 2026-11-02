@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
-import { Mail, Send, Trash2 } from 'lucide-react'
+import { Mail, Trash2 } from 'lucide-react'
 import { href, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { site } from '@/content/site'
@@ -16,16 +16,16 @@ const UNITS: Unit[] = ['kg', 'mt', 'cartons', 'containers']
 const INCOTERMS = ['FOB', 'CIF', 'CFR', 'EXW']
 
 const inputCls =
-  'w-full rounded-xl border border-line bg-white px-4 py-3 text-ink placeholder:text-muted/60 transition focus:border-forest-600 focus:outline-none focus:ring-4 focus:ring-forest-600/10 aria-[invalid=true]:border-red-500'
+  'w-full border-0 border-b border-ink/40 bg-transparent px-0 py-3 text-ink placeholder:text-muted/70 transition focus:border-wax focus:outline-none focus:ring-0 aria-[invalid=true]:border-wax'
 
 function Field({ label, id, required, error, children }: { label: string; id: string; required?: boolean; error?: string; children: ReactNode }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-forest-900">
-        {label}{required && <span className="text-saffron-600" aria-hidden> *</span>}
+      <label htmlFor={id} className="label block text-muted">
+        {label}{required && <span className="text-wax" aria-hidden> *</span>}
       </label>
       {children}
-      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-sm text-red-600">{error}</p>}
+      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-sm text-wax">{error}</p>}
     </div>
   )
 }
@@ -92,23 +92,23 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
   return (
     <form noValidate onSubmit={submit('wa')} className="min-w-0 space-y-8">
       {!compact && (
-        <fieldset className="min-w-0 rounded-3xl bg-white p-6 ring-1 ring-line sm:p-8">
+        <fieldset className="min-w-0 border border-ink bg-paper p-6 sm:p-8">
           <legend className="sr-only">{q.title}</legend>
           {lines.length === 0 ? (
             <div className="text-center">
-              <p className="text-muted">{q.empty}</p>
-              <Link href={href(locale, '/products')} className={buttonClass('outline', 'mt-5')}>{q.browse}</Link>
+              <p className="font-serif text-lg text-ink-2">{q.empty}</p>
+              <Link href={href(locale, '/products')} className={buttonClass('line', 'mt-6')}>{q.browse}</Link>
             </div>
           ) : (
             <>
-              <ul className="divide-y divide-line">
+              <ul className="border-t border-ink">
                 {lines.map((l) => (
-                  <li key={l.id} className="grid grid-cols-[1fr_auto] items-center gap-3 py-4 sm:grid-cols-[1fr_8rem_11rem_auto]">
+                  <li key={l.id} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b border-rule py-4 sm:grid-cols-[1fr_8rem_11rem_auto]">
                     <div>
-                      <p className="font-semibold text-forest-900">{l.name}</p>
-                      <p className="text-sm text-muted">{l.category}</p>
+                      <p className="font-display text-2xl leading-tight">{l.name}</p>
+                      <p className="label text-muted">{l.category}</p>
                     </div>
-                    <button type="button" onClick={() => dispatch({ type: 'remove', id: l.id })} aria-label={`${q.remove} ${l.name}`} className="rounded-full p-2 text-muted hover:bg-red-50 hover:text-red-600 sm:order-last">
+                    <button type="button" onClick={() => dispatch({ type: 'remove', id: l.id })} aria-label={`${q.remove} ${l.name}`} className="p-2 text-muted hover:text-wax sm:order-last">
                       <Trash2 className="size-4" aria-hidden />
                     </button>
                     <label className="sr-only" htmlFor={`qty-${l.id}`}>{q.quantity} — {l.name}</label>
@@ -121,28 +121,28 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
                   </li>
                 ))}
               </ul>
-              <button type="button" onClick={() => dispatch({ type: 'clear' })} className="mt-4 text-sm text-muted underline-offset-4 hover:text-red-600 hover:underline">{q.clear}</button>
+              <button type="button" onClick={() => dispatch({ type: 'clear' })} className="label mt-4 text-muted hover:text-wax">{q.clear}</button>
             </>
           )}
-          {err('content') && <p role="alert" className="mt-4 text-sm text-red-600">{err('content')}</p>}
+          {err('content') && <p role="alert" className="mt-4 text-sm text-wax">{err('content')}</p>}
         </fieldset>
       )}
 
-      <fieldset className={cx('min-w-0', !compact && 'rounded-3xl bg-white p-6 ring-1 ring-line sm:p-8')}>
+      <fieldset className={cx('min-w-0', !compact && 'border border-ink bg-paper p-6 sm:p-8')}>
         {!compact && (
           <>
             <legend className="sr-only">{q.details}</legend>
-            <h2 aria-hidden className="mb-6 font-display text-2xl text-forest-900">{q.details}</h2>
+            <h2 aria-hidden className="mb-6 font-display text-3xl">{q.details}</h2>
           </>
         )}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {!compact && (
             <div className="sm:col-span-2">
-              <p className="mb-2 text-sm font-medium text-forest-900">{q.type}</p>
+              <p className="label mb-3 text-muted">{q.type}</p>
               <div role="radiogroup" className="flex flex-wrap gap-2">
                 {([['quote', q.typeQuote], ['sample', q.typeSample], ['general', q.typeGeneral]] as const).map(([v, l]) => (
-                  <label key={v} className={cx('cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-saffron-500',
-                    type === v ? 'border-forest-800 bg-forest-800 text-white' : 'border-line bg-white text-forest-900 hover:border-forest-600')}>
+                  <label key={v} className={cx('label cursor-pointer border px-4 py-2.5 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-wax',
+                    type === v ? 'border-ink bg-ink text-paper' : 'border-ink/40 hover:border-ink')}>
                     <input type="radio" name="type" value={v} checked={type === v} onChange={() => setType(v)} className="sr-only" />
                     {l}
                   </label>
@@ -192,22 +192,22 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
       </fieldset>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className={buttonClass('primary', 'bg-[#25D366] text-white shadow-none hover:bg-[#1fb957]')}>
+        <button type="submit" className={buttonClass('wax')}>
           <WhatsAppIcon className="size-5" /> {q.sendWhatsApp}
         </button>
-        <button type="button" onClick={submit('mail')} className={buttonClass('secondary')}>
+        <button type="button" onClick={submit('mail')} className={buttonClass('line')}>
           <Mail className="size-4" aria-hidden /> {q.sendEmail}
         </button>
         <p className="text-sm text-muted sm:ms-2">{q.privacy}</p>
       </div>
 
       {sent && (
-        <div role="status" className="rounded-2xl bg-forest-50 p-5 text-sm text-forest-900 ring-1 ring-forest-100">
-          <p className="flex items-center gap-2 font-semibold"><Send className="flip-rtl size-4" aria-hidden /> {q.sentTitle} — {q.reference}: <span dir="ltr" className="font-mono">{sent}</span></p>
+        <div role="status" className="border border-ink bg-paper-2 p-5 text-sm">
+          <p className="flex flex-wrap items-center gap-2 font-semibold">{q.sentTitle} — {q.reference}: <span dir="ltr" className="font-mono">{sent}</span></p>
           <p className="mt-2 text-muted">
             {q.sentBody}{' '}
-            <a className="font-semibold text-forest-800 underline" href={`mailto:${site.contact.email}`}>{site.contact.email}</a> ·{' '}
-            <a dir="ltr" className="font-semibold text-forest-800 underline" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a>
+            <a className="font-semibold underline" href={`mailto:${site.contact.email}`}>{site.contact.email}</a> ·{' '}
+            <a dir="ltr" className="font-semibold underline" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a>
           </p>
         </div>
       )}

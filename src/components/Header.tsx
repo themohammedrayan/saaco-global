@@ -4,22 +4,21 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ClipboardList, Languages, Menu, X } from 'lucide-react'
 import { href, localeNames, locales, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { useQuote } from '@/lib/quote-store'
-import { buttonClass, cx } from './ui'
+import { cx } from './ui'
 
 export function Header({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   const pathname = usePathname() || `/${locale}`
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { state } = useQuote()
   const count = state.lines.length
 
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 24)
+    const on = () => setScrolled(window.scrollY > 40)
     on()
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
@@ -41,36 +40,26 @@ export function Header({ locale }: { locale: Locale }) {
   const rest = pathname.replace(/^\/(en|ar)(?=\/|$)/, '')
   const other = locales.find((l) => l !== locale)!
   const isActive = (p: string) => rest === p || rest.startsWith(p + '/')
-  const solid = scrolled || open
 
   return (
-    <header
-      className={cx(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        solid ? 'bg-cream/95 text-forest-900 shadow-[0_1px_0_0_var(--color-line)] backdrop-blur-md' : 'bg-transparent text-white',
-      )}
-    >
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-forest-900">
+    <header className={cx('sticky top-0 z-50 border-b bg-paper/95 backdrop-blur transition-colors', scrolled ? 'border-ink' : 'border-rule')}>
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-paper">
         {t.nav.skip}
       </a>
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-8">
-        <Link href={href(locale)} className="flex shrink-0 items-center gap-2" aria-label="SAACO Global — home">
-          <span className={cx('rounded-lg p-1 transition-colors', solid ? 'bg-transparent' : 'bg-white/95')}>
-            <Image src="/images/brand/logo-wide.png" alt="SAACO Global" width={218} height={109} priority className="h-10 w-auto lg:h-12" />
-          </span>
+      <div className="mx-auto flex h-[4.5rem] max-w-[88rem] items-stretch justify-between px-5 sm:px-8 lg:h-20 lg:px-12">
+        <Link href={href(locale)} className="flex shrink-0 items-center gap-3" aria-label="SAACO Global — home">
+          <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={660} height={306} priority sizes="180px" className="h-14 w-auto lg:h-[4.25rem]" />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="hidden items-stretch lg:flex">
           {nav.map((n) => (
             <Link
               key={n.path}
               href={href(locale, n.path)}
               aria-current={isActive(n.path) ? 'page' : undefined}
               className={cx(
-                'rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-                isActive(n.path)
-                  ? solid ? 'bg-forest-100 text-forest-900' : 'bg-white/15'
-                  : solid ? 'hover:bg-forest-50' : 'hover:bg-white/10',
+                'label relative flex items-center px-3.5 transition-colors hover:text-wax xl:px-5',
+                isActive(n.path) ? 'text-wax after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:bg-wax xl:after:inset-x-5' : 'text-ink-2',
               )}
             >
               {n.label}
@@ -78,67 +67,53 @@ export function Header({ locale }: { locale: Locale }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-stretch">
           <Link
             href={href(other, rest || '/')}
             hrefLang={other}
             lang={other}
-            className={cx('hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium sm:inline-flex', solid ? 'hover:bg-forest-50' : 'hover:bg-white/10')}
+            className="hidden items-center border-s border-rule px-4 text-sm hover:text-wax sm:flex"
             aria-label={`${t.nav.language}: ${localeNames[other]}`}
           >
-            <Languages className="size-4" aria-hidden /> {localeNames[other]}
+            {localeNames[other]}
           </Link>
           <Link
             href={href(locale, '/quote')}
-            className={cx('relative rounded-full p-2.5', solid ? 'hover:bg-forest-50' : 'hover:bg-white/10')}
+            className="label flex items-center gap-2 border-s border-rule bg-ink px-4 text-paper transition-colors hover:bg-wax sm:px-6"
             aria-label={`${t.nav.quoteBasket} (${count})`}
           >
-            <ClipboardList className="size-5" aria-hidden />
-            {count > 0 && (
-              <span className="absolute -end-0.5 -top-0.5 grid size-5 place-items-center rounded-full bg-saffron-500 text-[11px] font-bold text-forest-950">
-                {count}
-              </span>
-            )}
-          </Link>
-          <Link href={href(locale, '/quote')} className={buttonClass('primary', 'hidden px-5 py-2.5 md:inline-flex')}>
-            {t.nav.quote}
+            <span className="hidden sm:inline">{t.nav.quote}</span>
+            <span className="sm:hidden">{locale === 'ar' ? 'عرض' : 'Quote'}</span>
+            <span className={cx('grid h-5 min-w-5 place-items-center px-1 text-[0.65rem] tabular-nums', count ? 'bg-wax text-paper' : 'bg-paper/15')}>{count}</span>
           </Link>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className={cx('rounded-full p-2.5 lg:hidden', solid ? 'hover:bg-forest-50' : 'hover:bg-white/10')}
+            className="label flex items-center border-s border-rule ps-4 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? t.nav.close : t.nav.menu}
           >
-            {open ? <X className="size-6" /> : <Menu className="size-6" />}
+            {open ? t.nav.close : t.nav.menu}
           </button>
         </div>
       </div>
 
-      <div
-        id="mobile-nav"
-        hidden={!open}
-        className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line bg-cream px-4 pb-10 pt-4 text-forest-900 lg:hidden"
-      >
-        <nav aria-label="Mobile" className="flex flex-col">
-          {[{ path: '', label: t.nav.home }, ...nav].map((n) => (
-            <Link
-              key={n.path}
-              href={href(locale, n.path || '/')}
-              className="border-b border-line py-4 font-display text-2xl"
-              aria-current={(n.path ? isActive(n.path) : rest === '') ? 'page' : undefined}
-            >
-              {n.label}
-            </Link>
-          ))}
+      <div id="mobile-nav" hidden={!open} className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-ink bg-paper px-5 pb-10 lg:hidden">
+        <nav aria-label="Mobile">
+          <ol>
+            {[{ path: '', label: t.nav.home }, ...nav].map((n, i) => (
+              <li key={n.path} className="border-b border-rule">
+                <Link href={href(locale, n.path || '/')} className="flex items-baseline gap-4 py-4" aria-current={(n.path ? isActive(n.path) : rest === '') ? 'page' : undefined}>
+                  <span className="label w-6 text-muted">{String(i).padStart(2, '0')}</span>
+                  <span className="font-display text-3xl">{n.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </nav>
-        <div className="mt-8 flex flex-col gap-3">
-          <Link href={href(locale, '/quote')} className={buttonClass('primary')}>{t.nav.quote}</Link>
-          <Link href={href(other, rest || '/')} hrefLang={other} lang={other} className={buttonClass('outline')}>
-            <Languages className="size-4" aria-hidden /> {localeNames[other]}
-          </Link>
-        </div>
+        <Link href={href(other, rest || '/')} hrefLang={other} lang={other} className="mt-6 inline-block border border-ink px-5 py-3 text-sm">
+          {localeNames[other]}
+        </Link>
       </div>
     </header>
   )

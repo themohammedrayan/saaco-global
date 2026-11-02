@@ -1,37 +1,36 @@
 @import 'tailwindcss';
 
+/* ------------------------------------------------------------------
+   SAACO Global — "Spice-trade ledger"
+   Paper, ink and one sealing-wax red. Hairline rules, no rounded
+   corners, Caslon display + Plex Mono for the data of trade.
+   ------------------------------------------------------------------ */
 @theme {
-  --color-forest-950: #071a13;
-  --color-forest-900: #0c2a1f;
-  --color-forest-800: #123a2b;
-  --color-forest-700: #1a4d39;
-  --color-forest-600: #24634a;
-  --color-forest-100: #e3eee7;
-  --color-forest-50: #f1f7f3;
-  --color-saffron-600: #b8621a;
-  --color-saffron-500: #d9822b;
-  --color-saffron-400: #e9a04f;
-  --color-saffron-100: #fbecd9;
-  --color-gold-500: #c9a24a;
-  --color-gold-300: #e3cb8e;
-  --color-cream: #fbf7ef;
-  --color-sand: #f3ead9;
-  --color-ink: #1b2019;
-  --color-muted: #5a6157;
-  --color-line: #e6dfcf;
+  --color-paper: #f3eee3;
+  --color-paper-2: #e9e2d2;
+  --color-paper-3: #ddd4c0;
+  --color-ink: #16130f;
+  --color-ink-2: #3a342c;
+  --color-muted: #6e665a;
+  --color-rule: rgb(22 19 15 / 0.16);
+  --color-rule-strong: rgb(22 19 15 / 0.7);
+  --color-wax: #a1271c;
+  --color-wax-2: #7f1d15;
+  --color-night: #13110e;
 
-  --font-display: var(--font-display-en), Georgia, serif;
+  --font-display: var(--font-display-en), 'Times New Roman', serif;
+  --font-serif: var(--font-serif-en), Georgia, serif;
   --font-sans: var(--font-sans-en), system-ui, sans-serif;
+  --font-mono: var(--font-mono-plex), ui-monospace, monospace;
 
-  --animate-marquee: marquee 40s linear infinite;
-  @keyframes marquee {
+  --radius-none: 0;
+
+  --animate-ticker: ticker 60s linear infinite;
+  @keyframes ticker {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-}
-
-:root {
-  color-scheme: light;
+  --animate-spin-slow: spin 40s linear infinite;
 }
 
 html {
@@ -40,57 +39,73 @@ html {
 }
 
 body {
-  background: var(--color-cream);
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern', 'liga';
 }
 
-/* Arabic typography */
+/* Arabic: Amiri (classical naskh) for display, Plex Arabic for text */
 html[lang='ar'] {
-  --font-display: var(--font-display-ar), var(--font-sans-ar), serif;
+  --font-display: var(--font-display-ar), serif;
+  --font-serif: var(--font-display-ar), serif;
   --font-sans: var(--font-sans-ar), system-ui, sans-serif;
 }
-html[lang='ar'] body {
-  line-height: 1.75;
+html[lang='ar'] body { line-height: 1.8; }
+html[lang='ar'] .tracking-label { letter-spacing: 0 !important; }
+html[dir='rtl'] .flip-rtl { transform: scaleX(-1); }
+html[dir='rtl'] .animate-ticker { animation-direction: reverse; }
+
+/* Small-caps mono label: the voice of the ledger */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-html[lang='ar'] .font-display {
-  letter-spacing: 0 !important;
+html[lang='ar'] .label { font-family: var(--font-sans); letter-spacing: 0; font-size: 0.8rem; text-transform: none; }
+
+/* Unify AI/stock photography into one printed, warm register */
+.plate-img {
+  filter: saturate(0.78) contrast(1.04) sepia(0.12);
+  transition: filter 0.6s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-html[dir='rtl'] .flip-rtl {
-  transform: scaleX(-1);
-}
-html[dir='rtl'] .animate-marquee {
-  animation-direction: reverse;
+.group:hover .plate-img, .plate-img:hover { filter: saturate(1) contrast(1.02) sepia(0); }
+
+/* Paper grain */
+.paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-::selection {
-  background: var(--color-saffron-400);
-  color: var(--color-forest-950);
-}
+/* Ledger ruling for tables */
+.ledger-row { border-bottom: 1px solid var(--color-rule); }
+.ledger-row:hover { background: rgb(161 39 28 / 0.04); }
 
-:focus-visible {
-  outline: 2px solid var(--color-saffron-500);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+::selection { background: var(--color-wax); color: var(--color-paper); }
 
-/* Scroll reveal (progressively enhanced: content is visible without JS) */
+:focus-visible { outline: 2px solid var(--color-wax); outline-offset: 3px; }
+
+/* Scroll reveal (progressive: visible without JS) */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(14px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.js [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
 
-.grain {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 3px 3px;
+/* Underline link that draws in */
+.ink-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+  padding-bottom: 2px;
 }
+.ink-link:hover { background-size: 0 1px; background-position: 100% 100%; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

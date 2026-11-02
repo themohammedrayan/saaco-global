@@ -6,6 +6,8 @@ export type ProductItem = {
   /** Indicative HS code to help importers with customs classification. */
   hs: string
   forms: L
+  /** Botanical name, shown in the specimen catalogue. */
+  latin?: string
 }
 
 export type SpecRow = { label: L; value: L }
@@ -47,20 +49,20 @@ export const categories: Category[] = [
       en: 'Kerala’s Malabar coast has traded spices with the world for centuries. We source cardamom, black pepper, cinnamon, clove and turmeric directly from growers in the region, clean and grade them, and pack them to your specification — whole, crushed or ground. Every lot is selected for aroma, colour and freshness, so the flavour your customers expect arrives intact.',
       ar: 'تاجر ساحل مالابار في كيرالا بالتوابل مع العالم منذ قرون. نوفّر الهيل والفلفل الأسود والقرفة والقرنفل والكركم مباشرةً من مزارعي المنطقة، وننظّفها ونفرزها ونعبّئها وفق مواصفاتك — كاملة أو مجروشة أو مطحونة. نختار كل دفعة لرائحتها ولونها ونضارتها، لتصل النكهة التي يتوقعها عملاؤك كما هي.',
     },
-    cover: '/images/spices/mixed.webp',
+    cover: '/images/plates/mixed.webp',
     gallery: [
-      { src: '/images/spices/cardamom.webp', alt: { en: 'Green cardamom pods', ar: 'قرون الهيل الأخضر' } },
-      { src: '/images/spices/black-pepper.webp', alt: { en: 'Black pepper', ar: 'الفلفل الأسود' } },
-      { src: '/images/spices/cinnamon.webp', alt: { en: 'Cinnamon sticks', ar: 'أعواد القرفة' } },
-      { src: '/images/spices/clove.webp', alt: { en: 'Whole cloves', ar: 'القرنفل الكامل' } },
-      { src: '/images/spices/cardamom-pepper.webp', alt: { en: 'Cardamom and black pepper', ar: 'الهيل والفلفل الأسود' } },
+      { src: '/images/plates/cardamom.webp', alt: { en: 'Green cardamom pods', ar: 'قرون الهيل الأخضر' } },
+      { src: '/images/plates/black-pepper.webp', alt: { en: 'Black pepper', ar: 'الفلفل الأسود' } },
+      { src: '/images/plates/cinnamon.webp', alt: { en: 'Cinnamon sticks', ar: 'أعواد القرفة' } },
+      { src: '/images/plates/clove.webp', alt: { en: 'Whole cloves', ar: 'القرنفل الكامل' } },
+      { src: '/images/plates/cardamom-pepper.webp', alt: { en: 'Cardamom and black pepper', ar: 'الهيل والفلفل الأسود' } },
     ],
     items: [
-      { id: 'green-cardamom', name: { en: 'Green Cardamom', ar: 'الهيل الأخضر' }, hs: '0908.31', forms: spec('Whole pods, size-graded', 'قرون كاملة مفرزة حسب الحجم') },
-      { id: 'black-pepper', name: { en: 'Black Pepper', ar: 'الفلفل الأسود' }, hs: '0904.11', forms: spec('Whole, crushed, ground', 'كامل، مجروش، مطحون') },
-      { id: 'cinnamon', name: { en: 'Cinnamon', ar: 'القرفة' }, hs: '0906.19', forms: spec('Sticks, quills, ground', 'أعواد، لفائف، مطحونة') },
-      { id: 'clove', name: { en: 'Clove', ar: 'القرنفل' }, hs: '0907.10', forms: spec('Whole, ground', 'كامل، مطحون') },
-      { id: 'turmeric', name: { en: 'Turmeric', ar: 'الكركم' }, hs: '0910.30', forms: spec('Fingers, powder', 'أصابع، مسحوق') },
+      { id: 'green-cardamom', latin: 'Elettaria cardamomum', name: { en: 'Green Cardamom', ar: 'الهيل الأخضر' }, hs: '0908.31', forms: spec('Whole pods, size-graded', 'قرون كاملة مفرزة حسب الحجم') },
+      { id: 'black-pepper', latin: 'Piper nigrum', name: { en: 'Black Pepper', ar: 'الفلفل الأسود' }, hs: '0904.11', forms: spec('Whole, crushed, ground', 'كامل، مجروش، مطحون') },
+      { id: 'cinnamon', latin: 'Cinnamomum verum', name: { en: 'Cinnamon', ar: 'القرفة' }, hs: '0906.19', forms: spec('Sticks, quills, ground', 'أعواد، لفائف، مطحونة') },
+      { id: 'clove', latin: 'Syzygium aromaticum', name: { en: 'Clove', ar: 'القرنفل' }, hs: '0907.10', forms: spec('Whole, ground', 'كامل، مطحون') },
+      { id: 'turmeric', latin: 'Curcuma longa', name: { en: 'Turmeric', ar: 'الكركم' }, hs: '0910.30', forms: spec('Fingers, powder', 'أصابع، مسحوق') },
       { id: 'spice-blends', name: { en: 'Spice Powders & Blends', ar: 'مساحيق وخلطات التوابل' }, hs: '0910.91', forms: spec('Custom blends, private label', 'خلطات مخصّصة، علامة خاصة') },
     ],
     specs: [
@@ -92,9 +94,9 @@ export const categories: Category[] = [
       { src: '/images/tea-coffee/vira-classic-blend.webp', alt: { en: 'VIRA Coffee Classic Blend', ar: 'خلطة VIRA Coffee الكلاسيكية' } },
     ],
     items: [
-      { id: 'black-tea', name: { en: 'Black Tea', ar: 'الشاي الأسود' }, hs: '0902.40', forms: spec('Loose leaf, CTC, dust', 'أوراق سائبة، CTC، ناعم') },
-      { id: 'coffee-beans', name: { en: 'Coffee Beans', ar: 'حبوب القهوة' }, hs: '0901.11', forms: spec('Green or roasted, Arabica & Robusta', 'خضراء أو محمّصة، أرابيكا وروبوستا') },
-      { id: 'ground-coffee', name: { en: 'Ground Coffee & Blends', ar: 'القهوة المطحونة والخلطات' }, hs: '0901.21', forms: spec('Ground, retail packs', 'مطحونة، عبوات تجزئة') },
+      { id: 'black-tea', latin: 'Camellia sinensis', name: { en: 'Black Tea', ar: 'الشاي الأسود' }, hs: '0902.40', forms: spec('Loose leaf, CTC, dust', 'أوراق سائبة، CTC، ناعم') },
+      { id: 'coffee-beans', latin: 'Coffea arabica · C. canephora', name: { en: 'Coffee Beans', ar: 'حبوب القهوة' }, hs: '0901.11', forms: spec('Green or roasted, Arabica & Robusta', 'خضراء أو محمّصة، أرابيكا وروبوستا') },
+      { id: 'ground-coffee', latin: 'Coffea spp.', name: { en: 'Ground Coffee & Blends', ar: 'القهوة المطحونة والخلطات' }, hs: '0901.21', forms: spec('Ground, retail packs', 'مطحونة، عبوات تجزئة') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: spec('South India (Kerala & Western Ghats)', 'جنوب الهند (كيرالا والغاتس الغربية)') },
@@ -116,15 +118,15 @@ export const categories: Category[] = [
       en: 'Kerala means “land of coconuts”. Our coconut oil is pressed from mature kernels for a clean aroma and long shelf life, and our honey is collected from forest and farm hives — packed in glass or bulk containers for food service, retail and wellness brands.',
       ar: 'تعني كلمة كيرالا «أرض جوز الهند». يُعصر زيت جوز الهند لدينا من لبّ ناضج ليمنح رائحة نقية وعمرًا تخزينيًا طويلًا، ويُجمع عسلنا من خلايا الغابات والمزارع — ويُعبّأ في عبوات زجاجية أو بالجملة لقطاع الأغذية والتجزئة والعافية.',
     },
-    cover: '/images/honey-coconut-oil/duo.webp',
+    cover: '/images/honey-coconut-oil/honey.webp',
     gallery: [
-      { src: '/images/honey-coconut-oil/honey.webp', alt: { en: 'Golden honey', ar: 'عسل ذهبي' } },
-      { src: '/images/honey-coconut-oil/coconut-oil.webp', alt: { en: 'Coconut oil', ar: 'زيت جوز الهند' } },
+      { src: '/images/plates/honey-banner.webp', alt: { en: 'Golden honey', ar: 'عسل ذهبي' } },
+      { src: '/images/plates/coconut-oil.webp', alt: { en: 'Coconut oil', ar: 'زيت جوز الهند' } },
       { src: '/images/honey-coconut-oil/duo.webp', alt: { en: 'Honey and coconut oil', ar: 'العسل وزيت جوز الهند' } },
     ],
     items: [
-      { id: 'natural-honey', name: { en: 'Natural Honey', ar: 'العسل الطبيعي' }, hs: '0409.00', forms: spec('Raw / filtered, glass jars or bulk', 'خام / مُصفّى، برطمانات زجاجية أو بالجملة') },
-      { id: 'coconut-oil', name: { en: 'Coconut Oil', ar: 'زيت جوز الهند' }, hs: '1513.19', forms: spec('Cold-pressed / virgin, bottles or bulk', 'معصور على البارد / بكر، زجاجات أو بالجملة') },
+      { id: 'natural-honey', latin: 'Mel — Apis spp.', name: { en: 'Natural Honey', ar: 'العسل الطبيعي' }, hs: '0409.00', forms: spec('Raw / filtered, glass jars or bulk', 'خام / مُصفّى، برطمانات زجاجية أو بالجملة') },
+      { id: 'coconut-oil', latin: 'Cocos nucifera', name: { en: 'Coconut Oil', ar: 'زيت جوز الهند' }, hs: '1513.19', forms: spec('Cold-pressed / virgin, bottles or bulk', 'معصور على البارد / بكر، زجاجات أو بالجملة') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: origin },
@@ -154,7 +156,7 @@ export const categories: Category[] = [
     ],
     items: [
       { id: 'mixed-vegetables', name: { en: 'Fresh Vegetables', ar: 'الخضروات الطازجة' }, hs: '07', forms: spec('Seasonal assortment, graded', 'تشكيلة موسمية، مفرزة') },
-      { id: 'coconuts', name: { en: 'Coconuts', ar: 'جوز الهند' }, hs: '0801.19', forms: spec('Mature / semi-husked', 'ناضج / نصف مقشّر') },
+      { id: 'coconuts', latin: 'Cocos nucifera', name: { en: 'Coconuts', ar: 'جوز الهند' }, hs: '0801.19', forms: spec('Mature / semi-husked', 'ناضج / نصف مقشّر') },
       { id: 'tropical-fruit', name: { en: 'Tropical Fruit', ar: 'الفواكه الاستوائية' }, hs: '08', forms: spec('Seasonal availability', 'حسب توفّر الموسم') },
     ],
     specs: [
@@ -183,9 +185,9 @@ export const categories: Category[] = [
       { src: '/images/berries/forest-berries.webp', alt: { en: 'Mixed forest berries', ar: 'توت الغابات المشكّل' } },
     ],
     items: [
-      { id: 'mixed-berries', name: { en: 'Mixed Berries', ar: 'التوت المشكّل' }, hs: '0810', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
-      { id: 'blueberries', name: { en: 'Blueberries', ar: 'التوت الأزرق' }, hs: '0810.40', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
-      { id: 'raspberries', name: { en: 'Raspberries', ar: 'توت العليق' }, hs: '0810.20', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'mixed-berries', latin: 'Rubus · Vaccinium spp.', name: { en: 'Mixed Berries', ar: 'التوت المشكّل' }, hs: '0810', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'blueberries', latin: 'Vaccinium corymbosum', name: { en: 'Blueberries', ar: 'التوت الأزرق' }, hs: '0810.40', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'raspberries', latin: 'Rubus idaeus', name: { en: 'Raspberries', ar: 'توت العليق' }, hs: '0810.20', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
     ],
     specs: [
       { label: spec('Formats', 'الأشكال'), value: spec('Fresh, frozen — per enquiry', 'طازج، مجمّد — حسب الاستفسار') },
@@ -212,8 +214,8 @@ export const categories: Category[] = [
       { src: '/images/wheat-rice/ears.webp', alt: { en: 'Ears of wheat', ar: 'سنابل القمح' } },
     ],
     items: [
-      { id: 'rice', name: { en: 'Rice', ar: 'الأرز' }, hs: '1006.30', forms: spec('Basmati & non-basmati, raw / parboiled', 'بسمتي وغير بسمتي، أبيض / مسلوق جزئيًا') },
-      { id: 'wheat', name: { en: 'Wheat', ar: 'القمح' }, hs: '1001.99', forms: spec('Milling-quality grain', 'حبوب صالحة للطحن') },
+      { id: 'rice', latin: 'Oryza sativa', name: { en: 'Rice', ar: 'الأرز' }, hs: '1006.30', forms: spec('Basmati & non-basmati, raw / parboiled', 'بسمتي وغير بسمتي، أبيض / مسلوق جزئيًا') },
+      { id: 'wheat', latin: 'Triticum aestivum', name: { en: 'Wheat', ar: 'القمح' }, hs: '1001.99', forms: spec('Milling-quality grain', 'حبوب صالحة للطحن') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: originIndia },
@@ -233,9 +235,9 @@ export const categories: Category[] = [
       en: 'Rooted in Kerala’s botanical traditions: handmade soaps with natural oils, herbal hair oil with coconut and hibiscus, and fine fragrance oils and eau de parfum — including VIRAZ “Golden Flora”. Available under our partners’ brands or as private label for your market.',
       ar: 'مستوحاة من تقاليد كيرالا النباتية: صابون مصنوع يدويًا بزيوت طبيعية، وزيت شعر عشبي بجوز الهند والكركديه، وزيوت عطرية فاخرة وعطور — ومنها عطر VIRAZ «Golden Flora». متوفرة بعلامات شركائنا أو بعلامتك الخاصة لسوقك.',
     },
-    cover: '/images/cosmetics-perfumes/collection.webp',
+    cover: '/images/plates/collection.webp',
     gallery: [
-      { src: '/images/cosmetics-perfumes/soap.webp', alt: { en: 'Handmade natural soap', ar: 'صابون طبيعي مصنوع يدويًا' } },
+      { src: '/images/plates/soap.webp', alt: { en: 'Handmade natural soap', ar: 'صابون طبيعي مصنوع يدويًا' } },
       { src: '/images/cosmetics-perfumes/hair-oil.webp', alt: { en: 'Herbal hair oil', ar: 'زيت شعر عشبي' } },
       { src: '/images/cosmetics-perfumes/fragrance-oil.webp', alt: { en: 'Fragrance oil', ar: 'زيت عطري' } },
       { src: '/images/cosmetics-perfumes/viraz-golden-flora.webp', alt: { en: 'VIRAZ Golden Flora eau de parfum', ar: 'عطر VIRAZ Golden Flora' } },

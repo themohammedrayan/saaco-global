@@ -5,10 +5,9 @@ import { site } from '@/content/site'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
 import { PageHero } from '@/components/PageHero'
-import { Icon } from '@/components/Icon'
 import { Img } from '@/components/Img'
-import { CtaBand, PartnersMarquee, StatsBand } from '@/components/sections'
-import { Container, Section, SectionHeading } from '@/components/ui'
+import { CtaBand, Particulars, PartnersGrid } from '@/components/sections'
+import { RunningHead, Section, SectionHeading } from '@/components/ui'
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/about'>) {
   const locale = await getLocale(params)
@@ -19,70 +18,77 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/about'>)
 export default async function AboutPage({ params }: PageProps<'/[locale]/about'>) {
   const locale = await getLocale(params)
   const t = getDict(locale)
+  const ar = locale === 'ar'
   const { lat, lng } = site.address.geo
   return (
     <>
-      <PageHero locale={locale} eyebrow={t.about.eyebrow} title={t.about.title} body={t.about.body} image="/images/wheat-rice/wheat-field.webp" crumbs={[{ label: t.nav.about }]} />
+      <PageHero locale={locale} no="005" eyebrow={t.about.eyebrow} title={t.about.title} body={t.about.body} image="/images/wheat-rice/wheat-field.webp" caption={ar ? 'شكل — حقول الحصاد' : 'Fig. — Harvest fields'} crumbs={[{ label: t.nav.about }]} />
 
-      <Section tone="cream">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
-          <div data-reveal className="relative aspect-square overflow-hidden rounded-[2rem]">
-            <Img src="/images/hero/spice-harvest.webp" alt={locale === 'ar' ? 'توابل كيرالا' : 'Spices of Kerala'} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+      <Section>
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <RunningHead no="01">{t.about.mission}</RunningHead>
+            <p data-reveal className="mt-8 font-display text-4xl leading-[1.1] sm:text-5xl">{t.about.missionBody}</p>
+            <p data-reveal className="mt-10 font-serif text-lg leading-relaxed text-ink-2">{t.home.farmBody}</p>
           </div>
-          <div>
-            <SectionHeading eyebrow={t.about.mission} title={tr(site.tagline, locale)} body={t.about.missionBody} />
-            <p data-reveal className="mt-6 leading-relaxed text-muted">{t.home.farmBody}</p>
+          <div className="lg:col-span-5">
+            <RunningHead no="02">{t.ledger.particulars}</RunningHead>
+            <div className="mt-8"><Particulars locale={locale} /></div>
           </div>
         </div>
       </Section>
 
-      <StatsBand locale={locale} />
-
-      <Section tone="white">
-        <SectionHeading eyebrow={t.home.storyEyebrow} title={t.about.timeline} center className="mb-16" />
-        <ol className="relative mx-auto max-w-4xl">
-          <span aria-hidden className="absolute inset-y-0 start-6 w-px bg-line md:start-1/2" />
-          {timeline.map((s, i) => (
-            <li key={s.year} data-reveal className="relative mb-12 grid gap-4 ps-16 md:grid-cols-2 md:gap-16 md:ps-0">
-              <span aria-hidden className="absolute start-6 top-2 z-10 size-4 -translate-x-1/2 rounded-full border-4 border-white bg-saffron-500 ring-1 ring-saffron-500 md:start-1/2 rtl:translate-x-1/2" />
-              <div className={i % 2 === 0 ? 'md:text-end' : 'md:order-last'}>
-                <p className="font-display text-5xl text-saffron-600" dir="ltr">{s.year}</p>
-              </div>
-              <div className="rounded-3xl bg-cream p-7 ring-1 ring-line">
-                <h3 className="font-display text-2xl text-forest-900">{tr(s.title, locale)}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{tr(s.body, locale)}</p>
+      <Section tone="paper-2" className="border-y border-ink">
+        <SectionHeading no="03" kicker={t.ledger.chronicle} title={t.about.timeline} />
+        <ol className="border-t border-ink">
+          {timeline.map((s) => (
+            <li key={s.year} data-reveal className="grid gap-6 border-b border-rule py-10 md:grid-cols-12">
+              <p className="font-display text-8xl leading-none text-wax md:col-span-4 lg:text-9xl" dir="ltr">{s.year}</p>
+              <div className="md:col-span-8 md:pt-3">
+                <h3 className="font-display text-3xl">{tr(s.title, locale)}</h3>
+                <p className="mt-4 max-w-2xl font-serif text-lg leading-relaxed text-ink-2">{tr(s.body, locale)}</p>
               </div>
             </li>
           ))}
         </ol>
       </Section>
 
-      <Section tone="sand">
-        <SectionHeading title={t.about.values} center className="mb-12" />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Section>
+        <SectionHeading no="04" kicker={t.about.values} title={ar ? 'مبادئ الدار' : 'Principles of the house'} />
+        <dl className="grid gap-px border border-ink bg-ink sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <div key={i} data-reveal className="rounded-3xl bg-white p-7 ring-1 ring-line">
-              <Icon name={p.icon} className="size-8 text-saffron-600" />
-              <h3 className="mt-5 font-display text-xl text-forest-900">{tr(p.title, locale)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{tr(p.body, locale)}</p>
+            <div key={i} data-reveal className="bg-paper p-7">
+              <dt>
+                <span className="label text-wax">{String(i + 1).padStart(2, '0')}</span>
+                <span className="mt-4 block font-display text-2xl">{tr(p.title, locale)}</span>
+              </dt>
+              <dd className="mt-3 text-sm leading-relaxed text-ink-2">{tr(p.body, locale)}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </Section>
 
-      <section className="bg-cream py-20">
-        <Container><SectionHeading eyebrow={t.home.partnersEyebrow} title={t.home.partnersTitle} center className="mb-12" /></Container>
-        <PartnersMarquee />
-      </section>
+      <Section tone="paper-2" className="border-y border-ink">
+        <SectionHeading no="05" kicker={t.ledger.correspondents} title={t.home.partnersTitle} />
+        <PartnersGrid />
+      </Section>
 
-      <Section tone="white">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <SectionHeading title={t.about.whereTitle} body={t.about.whereBody} />
-          <div className="overflow-hidden rounded-3xl ring-1 ring-line">
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <RunningHead no="06">{t.about.whereTitle}</RunningHead>
+            <p className="mt-8 font-serif text-xl leading-relaxed text-ink-2">{t.about.whereBody}</p>
+            <address className="mt-8 border-t border-ink pt-4 not-italic">
+              <p className="font-display text-2xl">{site.name}</p>
+              <p className="mt-1 text-ink-2">{tr(site.address.lines, locale)}</p>
+              <p className="label mt-3 text-muted" dir="ltr">{lat.toFixed(4)}°N · {lng.toFixed(4)}°E</p>
+            </address>
+          </div>
+          <div className="border border-ink lg:col-span-7">
             <iframe
               title={tr(site.address.lines, locale)}
-              src={`https://www.google.com/maps?q=${lat},${lng}&z=11&output=embed&hl=${locale}`}
-              className="h-80 w-full border-0"
+              src={`https://www.google.com/maps?q=${lat},${lng}&z=10&output=embed&hl=${locale}`}
+              className="h-96 w-full border-0 grayscale-[0.6] sepia-[0.2]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />

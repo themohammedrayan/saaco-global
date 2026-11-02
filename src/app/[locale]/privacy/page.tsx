@@ -17,8 +17,8 @@ export default async function PrivacyPage({ params }: PageProps<'/[locale]/priva
   const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} title={t.footer.privacy} crumbs={[{ label: t.footer.privacy }]} />
-      <Section tone="cream">
+      <PageHero locale={locale} no="L-2" title={t.footer.privacy} crumbs={[{ label: t.footer.privacy }]} />
+      <Section>
         <Prose>
           <p>{ar ? 'نحترم خصوصيتك. توضح هذه الصفحة البيانات التي نتعامل معها عند استخدامك لهذا الموقع.' : 'We respect your privacy. This page explains what data is handled when you use this website.'}</p>
           <h2>{ar ? 'نماذج الاستفسار' : 'Enquiry forms'}</h2>

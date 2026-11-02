@@ -9,6 +9,7 @@ import { fontVars } from '@/lib/fonts'
 import { organizationLd } from '@/lib/seo'
 import { QuoteProvider } from '@/lib/quote-store'
 import { Header } from '@/components/Header'
+import { Ticker } from '@/components/Ticker'
 import { Footer } from '@/components/Footer'
 import { WhatsAppFab } from '@/components/WhatsAppFab'
 import { QuoteBasketPill } from '@/components/AddToQuote'
@@ -18,7 +19,7 @@ import { JsonLd } from '@/components/JsonLd'
 export const dynamicParams = false
 export const generateStaticParams = () => locales.map((locale) => ({ locale }))
 
-export const viewport: Viewport = { themeColor: '#0c2a1f', width: 'device-width', initialScale: 1 }
+export const viewport: Viewport = { themeColor: '#16130f', width: 'device-width', initialScale: 1 }
 
 export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
     description: tr(site.description, locale),
     applicationName: site.name,
     keywords: ['spice exporter India', 'Kerala spices', 'cardamom exporter', 'black pepper exporter', 'cinnamon', 'clove', 'coconut oil', 'honey', 'tea', 'coffee', 'SAACO Global', 'مصدر توابل', 'هيل', 'فلفل أسود'],
-    icons: { icon: '/favicon.png', apple: '/favicon.png' },
+    icons: { icon: '/favicon.png', apple: '/apple-touch-icon.png' },
     formatDetection: { telephone: false },
     other: {
       'geo.region': 'IN-KL',
@@ -53,6 +54,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
       </head>
       <body className="min-h-screen">
         <QuoteProvider>
+          <Ticker locale={locale} />
           <Header locale={locale} />
           <main id="main">{children}</main>
           <Footer locale={locale} />
