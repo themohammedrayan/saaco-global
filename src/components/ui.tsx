@@ -4,71 +4,78 @@ import type { ComponentProps, ReactNode } from 'react'
 export const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(' ')
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx('mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12', className)}>{children}</div>
+  return <div className={cx('mx-auto w-full max-w-[80rem] px-4 sm:px-6 lg:px-8', className)}>{children}</div>
 }
 
-type Tone = 'paper' | 'paper-2' | 'night'
+type Tone = 'white' | 'cream' | 'mist' | 'navy' | 'paper' | 'paper-2' | 'night'
 const tones: Record<Tone, string> = {
-  paper: 'bg-paper text-ink',
-  'paper-2': 'bg-paper-2 text-ink',
-  night: 'bg-night text-paper',
+  white: 'bg-white text-ink',
+  cream: 'bg-cream text-ink',
+  mist: 'bg-mist text-ink',
+  navy: 'bg-navy-900 text-white',
+  // aliases kept for pages not yet migrated
+  paper: 'bg-white text-ink',
+  'paper-2': 'bg-mist text-ink',
+  night: 'bg-navy-900 text-white',
 }
 
-export function Section({ id, className, children, tone = 'paper' }: { id?: string; className?: string; children: ReactNode; tone?: Tone }) {
+export function Section({ id, className, children, tone = 'white' }: { id?: string; className?: string; children: ReactNode; tone?: Tone }) {
   return (
-    <section id={id} className={cx('py-20 sm:py-28', tones[tone], className)}>
+    <section id={id} className={cx('py-16 sm:py-20', tones[tone], className)}>
       <Container>{children}</Container>
     </section>
   )
 }
 
-/** "§ 01 — Index of goods" style running head with a full-width rule. */
-export function RunningHead({ no, children, light, className }: { no?: string; children: ReactNode; light?: boolean; className?: string }) {
+/** Gold square + small caps kicker above section titles. */
+export function Kicker({ children, light }: { children: ReactNode; light?: boolean }) {
   return (
-    <div className={cx('flex items-center gap-4 border-t pt-4', light ? 'border-paper/40 text-paper/70' : 'border-ink text-ink-2', className)}>
-      {no && <span className="label">§ {no}</span>}
-      <span className="label">{children}</span>
+    <p className={cx('mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em]', light ? 'text-gold-400' : 'text-gold-600')}>
+      <span aria-hidden className="size-2 bg-gold-500" />
+      {children}
+    </p>
+  )
+}
+
+export function SectionTitle({
+  kicker, title, lead, center, light, className, action,
+}: { kicker?: string; title: ReactNode; lead?: ReactNode; center?: boolean; light?: boolean; className?: string; action?: ReactNode }) {
+  return (
+    <div className={cx('mb-10 sm:mb-12', center ? 'mx-auto max-w-3xl text-center' : action ? 'flex flex-col gap-6 md:flex-row md:items-end md:justify-between' : 'max-w-3xl', className)}>
+      <div className={center ? '' : 'max-w-3xl'}>
+        {kicker && <Kicker light={light}>{kicker}</Kicker>}
+        <h2 className={cx('font-heading text-[1.9rem] font-extrabold uppercase leading-[1.08] tracking-tight sm:text-4xl lg:text-[2.6rem]', light ? 'text-white' : 'text-navy-900')}>
+          {title}
+        </h2>
+        {lead && <p className={cx('mt-4 text-[1.05rem] leading-relaxed', light ? 'text-white/75' : 'text-muted')}>{lead}</p>}
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   )
 }
 
-export function SectionHeading({
-  no, kicker, title, body, light, className, children,
-}: { no?: string; kicker: string; title: ReactNode; body?: string; light?: boolean; className?: string; children?: ReactNode }) {
-  return (
-    <header className={cx('mb-12 sm:mb-16', className)}>
-      <RunningHead no={no} light={light}>{kicker}</RunningHead>
-      <div className="mt-8 grid gap-6 lg:grid-cols-12 lg:items-end">
-        <h2 data-reveal className={cx('text-balance font-display text-[2.6rem] leading-[1.02] sm:text-6xl lg:col-span-8 lg:text-7xl', light ? 'text-paper' : 'text-ink')}>
-          {title}
-        </h2>
-        {(body || children) && (
-          <div data-reveal className={cx('lg:col-span-4 lg:pb-2', light ? 'text-paper/70' : 'text-ink-2')}>
-            {body && <p className="text-base leading-relaxed sm:text-[1.0625rem]">{body}</p>}
-            {children}
-          </div>
-        )}
-      </div>
-    </header>
-  )
-}
-
-type Variant = 'ink' | 'wax' | 'line' | 'line-light'
+type Variant = 'gold' | 'navy' | 'outline' | 'light' | 'whatsapp' | 'ink' | 'wax' | 'line' | 'line-light'
 const variants: Record<Variant, string> = {
-  ink: 'bg-ink text-paper hover:bg-wax',
-  wax: 'bg-wax text-paper hover:bg-wax-2',
-  line: 'border border-ink text-ink hover:bg-ink hover:text-paper',
-  'line-light': 'border border-paper/60 text-paper hover:bg-paper hover:text-ink',
+  gold: 'bg-gold-500 text-navy-950 hover:bg-gold-400 shadow-sm',
+  navy: 'bg-navy-800 text-white hover:bg-navy-700',
+  outline: 'border-2 border-navy-800 text-navy-800 hover:bg-navy-800 hover:text-white',
+  light: 'border-2 border-white/70 text-white hover:bg-white hover:text-navy-900',
+  whatsapp: 'bg-[#25D366] text-white hover:bg-[#1eb956]',
+  // aliases kept for pages not yet migrated
+  ink: 'bg-navy-800 text-white hover:bg-navy-700',
+  wax: 'bg-gold-500 text-navy-950 hover:bg-gold-400',
+  line: 'border-2 border-navy-800 text-navy-800 hover:bg-navy-800 hover:text-white',
+  'line-light': 'border-2 border-white/70 text-white hover:bg-white hover:text-navy-900',
 }
-export const buttonClass = (v: Variant = 'ink', extra?: string) =>
+export const buttonClass = (v: Variant = 'gold', extra?: string) =>
   cx(
-    'label inline-flex items-center justify-center gap-3 px-6 py-4 !text-[0.72rem] font-medium transition-colors duration-200 disabled:opacity-50',
+    'inline-flex items-center justify-center gap-2.5 rounded-md px-5 py-3 text-sm font-bold uppercase tracking-wide transition-colors duration-200 disabled:opacity-50',
     variants[v],
     extra,
   )
 
 export function ButtonLink({
-  variant = 'ink', className, external, ...p
+  variant = 'gold', className, external, ...p
 }: ComponentProps<typeof Link> & { variant?: Variant; external?: boolean }) {
   if (external) {
     const { href, children, ...rest } = p
@@ -81,29 +88,23 @@ export function ButtonLink({
   return <Link className={buttonClass(variant, className)} {...p} />
 }
 
+/** Arrow in a small circle, used inside primary buttons. */
 export const Arrow = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 12" aria-hidden className={cx('flip-rtl h-3 w-6', className)} fill="none" stroke="currentColor" strokeWidth="1.25">
-    <path d="M0 6h22M17 1l5 5-5 5" />
+  <svg viewBox="0 0 16 16" aria-hidden className={cx('flip-rtl size-4 shrink-0', className)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 8h10M9 4l4 4-4 4" />
   </svg>
 )
 
-/** Rotating wax-seal mark. Pure SVG. */
-export function Seal({ text, className, size = 168 }: { text: string; className?: string; size?: number }) {
-  const r = 70
-  return (
-    <svg viewBox="0 0 200 200" width={size} height={size} className={cx('text-wax', className)} aria-hidden>
-      <defs>
-        <path id="seal-circle" d={`M100,100 m-${r},0 a${r},${r} 0 1,1 ${r * 2},0 a${r},${r} 0 1,1 -${r * 2},0`} />
-      </defs>
-      <circle cx="100" cy="100" r="96" fill="currentColor" />
-      <circle cx="100" cy="100" r="86" fill="none" stroke="var(--color-paper)" strokeOpacity=".5" strokeWidth="1" />
-      <circle cx="100" cy="100" r="52" fill="none" stroke="var(--color-paper)" strokeOpacity=".5" strokeWidth="1" />
-      <g className="origin-center animate-spin-slow" style={{ transformBox: 'fill-box' }}>
-        <text fill="var(--color-paper)" fontFamily="var(--font-mono)" fontSize="11">
-          <textPath href="#seal-circle" textLength={Math.round(2 * Math.PI * r - 6)} lengthAdjust="spacing">{text}</textPath>
-        </text>
-      </g>
-      <text x="100" y="112" textAnchor="middle" fill="var(--color-paper)" fontFamily="var(--font-display-en), serif" fontSize="40">SG</text>
-    </svg>
-  )
+export function Card({ className, children }: { className?: string; children: ReactNode }) {
+  return <div className={cx('rounded-lg border border-line bg-white shadow-card', className)}>{children}</div>
+}
+
+/* ---- Compatibility helpers for pages migrated in a later step ---- */
+export function RunningHead({ children, light, className }: { no?: string; children: ReactNode; light?: boolean; className?: string }) {
+  return <div className={className}><Kicker light={light}>{children}</Kicker></div>
+}
+export function SectionHeading({
+  kicker, title, body, light, className, children,
+}: { no?: string; kicker: string; title: ReactNode; body?: string; light?: boolean; className?: string; children?: ReactNode }) {
+  return <SectionTitle kicker={kicker} title={title} lead={body} light={light} className={className} action={children} />
 }

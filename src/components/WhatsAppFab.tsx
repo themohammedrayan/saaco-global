@@ -14,9 +14,9 @@ export function WhatsAppFab({ locale }: { locale: Locale }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.common.whatsappUs}
-      className="fixed bottom-4 end-4 z-40 grid size-14 place-items-center border border-ink bg-paper text-ink shadow-[4px_4px_0_0_var(--color-ink)] transition hover:-translate-y-0.5 hover:bg-[#25D366] hover:text-white sm:bottom-6 sm:end-6"
+      className="fixed bottom-5 end-5 z-40 grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lift ring-4 ring-white transition hover:scale-105 sm:bottom-6 sm:end-6"
     >
-      <WhatsAppIcon className="size-6" />
+      <WhatsAppIcon className="size-7" />
     </a>
   )
 }

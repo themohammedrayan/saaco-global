@@ -9,7 +9,7 @@ import { fontVars } from '@/lib/fonts'
 import { organizationLd } from '@/lib/seo'
 import { QuoteProvider } from '@/lib/quote-store'
 import { Header } from '@/components/Header'
-import { Ticker } from '@/components/Ticker'
+import { TopBar } from '@/components/TopBar'
 import { Footer } from '@/components/Footer'
 import { WhatsAppFab } from '@/components/WhatsAppFab'
 import { QuoteBasketPill } from '@/components/AddToQuote'
@@ -19,7 +19,7 @@ import { JsonLd } from '@/components/JsonLd'
 export const dynamicParams = false
 export const generateStaticParams = () => locales.map((locale) => ({ locale }))
 
-export const viewport: Viewport = { themeColor: '#16130f', width: 'device-width', initialScale: 1 }
+export const viewport: Viewport = { themeColor: '#071a44', width: 'device-width', initialScale: 1 }
 
 export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params
@@ -54,7 +54,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
       </head>
       <body className="min-h-screen">
         <QuoteProvider>
-          <Ticker locale={locale} />
+          <TopBar locale={locale} />
           <Header locale={locale} />
           <main id="main">{children}</main>
           <Footer locale={locale} />

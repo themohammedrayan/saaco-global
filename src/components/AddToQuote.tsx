@@ -14,7 +14,7 @@ export function AddToQuote({ locale, id, name, category }: { locale: Locale; id:
   const added = state.lines.some((l) => l.id === id)
   if (added) {
     return (
-      <Link href={href(locale, '/quote')} className="label inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 text-paper">
+      <Link href={href(locale, '/quote')} className="inline-flex items-center justify-center gap-1.5 rounded-md bg-navy-100 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-navy-800">
         ✓ {t.products.added}
       </Link>
     )
@@ -23,7 +23,7 @@ export function AddToQuote({ locale, id, name, category }: { locale: Locale; id:
     <button
       type="button"
       onClick={() => dispatch({ type: 'add', line: { id, name, category } })}
-      className={cx('label inline-flex items-center gap-2 border border-ink px-4 py-2.5 transition-colors hover:bg-ink hover:text-paper')}
+      className={cx('inline-flex items-center justify-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-gold-500 hover:text-navy-950')}
     >
       + {t.products.addToQuote}
     </button>
@@ -38,10 +38,10 @@ export function QuoteBasketPill({ locale }: { locale: Locale }) {
   return (
     <Link
       href={href(locale, '/quote')}
-      className="label fixed bottom-4 start-4 z-40 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-4 text-paper shadow-[4px_4px_0_0_var(--color-wax)] sm:bottom-6 sm:start-6"
+      className="fixed bottom-5 start-5 z-40 inline-flex items-center gap-3 rounded-full bg-navy-900 px-5 py-3.5 text-sm font-bold text-white shadow-lift ring-4 ring-white sm:bottom-6 sm:start-6"
     >
       {t.nav.quoteBasket}
-      <span className="grid h-5 min-w-5 place-items-center bg-wax px-1 tabular-nums">{n}</span>
+      <span className="grid size-6 place-items-center rounded-full bg-gold-500 text-xs text-navy-950 tabular-nums">{n}</span>
     </Link>
   )
 }
@@ -57,7 +57,7 @@ export function RequestSamples({ locale, lines }: { locale: Locale; lines: { id:
         lines.forEach((line) => dispatch({ type: 'add', line }))
         router.push(href(locale, '/quote') + '#sample')
       }}
-      className="label inline-flex items-center justify-center gap-3 border border-ink px-6 py-4 !text-[0.72rem] transition-colors hover:bg-ink hover:text-paper"
+      className="inline-flex items-center justify-center gap-2.5 rounded-md border-2 border-current px-5 py-3 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-navy-900"
     >
       {t.products.requestSamples}
     </button>

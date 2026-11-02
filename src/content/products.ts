@@ -6,8 +6,10 @@ export type ProductItem = {
   /** Indicative HS code to help importers with customs classification. */
   hs: string
   forms: L
-  /** Botanical name, shown in the specimen catalogue. */
+  /** Botanical name. */
   latin?: string
+  /** Primary product photo. */
+  image: string
 }
 
 export type SpecRow = { label: L; value: L }
@@ -58,12 +60,12 @@ export const categories: Category[] = [
       { src: '/images/plates/cardamom-pepper.webp', alt: { en: 'Cardamom and black pepper', ar: 'الهيل والفلفل الأسود' } },
     ],
     items: [
-      { id: 'green-cardamom', latin: 'Elettaria cardamomum', name: { en: 'Green Cardamom', ar: 'الهيل الأخضر' }, hs: '0908.31', forms: spec('Whole pods, size-graded', 'قرون كاملة مفرزة حسب الحجم') },
-      { id: 'black-pepper', latin: 'Piper nigrum', name: { en: 'Black Pepper', ar: 'الفلفل الأسود' }, hs: '0904.11', forms: spec('Whole, crushed, ground', 'كامل، مجروش، مطحون') },
-      { id: 'cinnamon', latin: 'Cinnamomum verum', name: { en: 'Cinnamon', ar: 'القرفة' }, hs: '0906.19', forms: spec('Sticks, quills, ground', 'أعواد، لفائف، مطحونة') },
-      { id: 'clove', latin: 'Syzygium aromaticum', name: { en: 'Clove', ar: 'القرنفل' }, hs: '0907.10', forms: spec('Whole, ground', 'كامل، مطحون') },
-      { id: 'turmeric', latin: 'Curcuma longa', name: { en: 'Turmeric', ar: 'الكركم' }, hs: '0910.30', forms: spec('Fingers, powder', 'أصابع، مسحوق') },
-      { id: 'spice-blends', name: { en: 'Spice Powders & Blends', ar: 'مساحيق وخلطات التوابل' }, hs: '0910.91', forms: spec('Custom blends, private label', 'خلطات مخصّصة، علامة خاصة') },
+      { id: 'green-cardamom', image: '/images/plates/cardamom.webp', latin: 'Elettaria cardamomum', name: { en: 'Green Cardamom', ar: 'الهيل الأخضر' }, hs: '0908.31', forms: spec('Whole pods, size-graded', 'قرون كاملة مفرزة حسب الحجم') },
+      { id: 'black-pepper', image: '/images/plates/black-pepper.webp', latin: 'Piper nigrum', name: { en: 'Black Pepper', ar: 'الفلفل الأسود' }, hs: '0904.11', forms: spec('Whole, crushed, ground', 'كامل، مجروش، مطحون') },
+      { id: 'cinnamon', image: '/images/plates/cinnamon.webp', latin: 'Cinnamomum verum', name: { en: 'Cinnamon', ar: 'القرفة' }, hs: '0906.19', forms: spec('Sticks, quills, ground', 'أعواد، لفائف، مطحونة') },
+      { id: 'clove', image: '/images/plates/clove.webp', latin: 'Syzygium aromaticum', name: { en: 'Clove', ar: 'القرنفل' }, hs: '0907.10', forms: spec('Whole, ground', 'كامل، مطحون') },
+      { id: 'turmeric', image: '/images/products/turmeric.webp', latin: 'Curcuma longa', name: { en: 'Turmeric', ar: 'الكركم' }, hs: '0910.30', forms: spec('Fingers, powder', 'أصابع، مسحوق') },
+      { id: 'spice-blends', image: '/images/plates/mixed.webp', name: { en: 'Spice Powders & Blends', ar: 'مساحيق وخلطات التوابل' }, hs: '0910.91', forms: spec('Custom blends, private label', 'خلطات مخصّصة، علامة خاصة') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: origin },
@@ -94,9 +96,9 @@ export const categories: Category[] = [
       { src: '/images/tea-coffee/vira-classic-blend.webp', alt: { en: 'VIRA Coffee Classic Blend', ar: 'خلطة VIRA Coffee الكلاسيكية' } },
     ],
     items: [
-      { id: 'black-tea', latin: 'Camellia sinensis', name: { en: 'Black Tea', ar: 'الشاي الأسود' }, hs: '0902.40', forms: spec('Loose leaf, CTC, dust', 'أوراق سائبة، CTC، ناعم') },
-      { id: 'coffee-beans', latin: 'Coffea arabica · C. canephora', name: { en: 'Coffee Beans', ar: 'حبوب القهوة' }, hs: '0901.11', forms: spec('Green or roasted, Arabica & Robusta', 'خضراء أو محمّصة، أرابيكا وروبوستا') },
-      { id: 'ground-coffee', latin: 'Coffea spp.', name: { en: 'Ground Coffee & Blends', ar: 'القهوة المطحونة والخلطات' }, hs: '0901.21', forms: spec('Ground, retail packs', 'مطحونة، عبوات تجزئة') },
+      { id: 'black-tea', image: '/images/tea-coffee/tea-leaves.webp', latin: 'Camellia sinensis', name: { en: 'Black Tea', ar: 'الشاي الأسود' }, hs: '0902.40', forms: spec('Loose leaf, CTC, dust', 'أوراق سائبة، CTC، ناعم') },
+      { id: 'coffee-beans', image: '/images/tea-coffee/coffee.webp', latin: 'Coffea arabica · C. canephora', name: { en: 'Coffee Beans', ar: 'حبوب القهوة' }, hs: '0901.11', forms: spec('Green or roasted, Arabica & Robusta', 'خضراء أو محمّصة، أرابيكا وروبوستا') },
+      { id: 'ground-coffee', image: '/images/tea-coffee/vira-classic-blend.webp', latin: 'Coffea spp.', name: { en: 'Ground Coffee & Blends', ar: 'القهوة المطحونة والخلطات' }, hs: '0901.21', forms: spec('Ground, retail packs', 'مطحونة، عبوات تجزئة') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: spec('South India (Kerala & Western Ghats)', 'جنوب الهند (كيرالا والغاتس الغربية)') },
@@ -125,8 +127,8 @@ export const categories: Category[] = [
       { src: '/images/honey-coconut-oil/duo.webp', alt: { en: 'Honey and coconut oil', ar: 'العسل وزيت جوز الهند' } },
     ],
     items: [
-      { id: 'natural-honey', latin: 'Mel — Apis spp.', name: { en: 'Natural Honey', ar: 'العسل الطبيعي' }, hs: '0409.00', forms: spec('Raw / filtered, glass jars or bulk', 'خام / مُصفّى، برطمانات زجاجية أو بالجملة') },
-      { id: 'coconut-oil', latin: 'Cocos nucifera', name: { en: 'Coconut Oil', ar: 'زيت جوز الهند' }, hs: '1513.19', forms: spec('Cold-pressed / virgin, bottles or bulk', 'معصور على البارد / بكر، زجاجات أو بالجملة') },
+      { id: 'natural-honey', image: '/images/honey-coconut-oil/honey.webp', latin: 'Mel — Apis spp.', name: { en: 'Natural Honey', ar: 'العسل الطبيعي' }, hs: '0409.00', forms: spec('Raw / filtered, glass jars or bulk', 'خام / مُصفّى، برطمانات زجاجية أو بالجملة') },
+      { id: 'coconut-oil', image: '/images/plates/coconut-oil.webp', latin: 'Cocos nucifera', name: { en: 'Coconut Oil', ar: 'زيت جوز الهند' }, hs: '1513.19', forms: spec('Cold-pressed / virgin, bottles or bulk', 'معصور على البارد / بكر، زجاجات أو بالجملة') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: origin },
@@ -155,9 +157,9 @@ export const categories: Category[] = [
       { src: '/images/vegetables-fruits/market-boxes.webp', alt: { en: 'Produce in crates', ar: 'منتجات في صناديق' } },
     ],
     items: [
-      { id: 'mixed-vegetables', name: { en: 'Fresh Vegetables', ar: 'الخضروات الطازجة' }, hs: '07', forms: spec('Seasonal assortment, graded', 'تشكيلة موسمية، مفرزة') },
-      { id: 'coconuts', latin: 'Cocos nucifera', name: { en: 'Coconuts', ar: 'جوز الهند' }, hs: '0801.19', forms: spec('Mature / semi-husked', 'ناضج / نصف مقشّر') },
-      { id: 'tropical-fruit', name: { en: 'Tropical Fruit', ar: 'الفواكه الاستوائية' }, hs: '08', forms: spec('Seasonal availability', 'حسب توفّر الموسم') },
+      { id: 'mixed-vegetables', image: '/images/vegetables-fruits/vegetables.webp', name: { en: 'Fresh Vegetables', ar: 'الخضروات الطازجة' }, hs: '07', forms: spec('Seasonal assortment, graded', 'تشكيلة موسمية، مفرزة') },
+      { id: 'coconuts', image: '/images/vegetables-fruits/coconut.webp', latin: 'Cocos nucifera', name: { en: 'Coconuts', ar: 'جوز الهند' }, hs: '0801.19', forms: spec('Mature / semi-husked', 'ناضج / نصف مقشّر') },
+      { id: 'tropical-fruit', image: '/images/vegetables-fruits/basket.webp', name: { en: 'Tropical Fruit', ar: 'الفواكه الاستوائية' }, hs: '08', forms: spec('Seasonal availability', 'حسب توفّر الموسم') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: origin },
@@ -185,9 +187,9 @@ export const categories: Category[] = [
       { src: '/images/berries/forest-berries.webp', alt: { en: 'Mixed forest berries', ar: 'توت الغابات المشكّل' } },
     ],
     items: [
-      { id: 'mixed-berries', latin: 'Rubus · Vaccinium spp.', name: { en: 'Mixed Berries', ar: 'التوت المشكّل' }, hs: '0810', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
-      { id: 'blueberries', latin: 'Vaccinium corymbosum', name: { en: 'Blueberries', ar: 'التوت الأزرق' }, hs: '0810.40', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
-      { id: 'raspberries', latin: 'Rubus idaeus', name: { en: 'Raspberries', ar: 'توت العليق' }, hs: '0810.20', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'mixed-berries', image: '/images/berries/mixed.webp', latin: 'Rubus · Vaccinium spp.', name: { en: 'Mixed Berries', ar: 'التوت المشكّل' }, hs: '0810', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'blueberries', image: '/images/berries/blueberries.webp', latin: 'Vaccinium corymbosum', name: { en: 'Blueberries', ar: 'التوت الأزرق' }, hs: '0810.40', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
+      { id: 'raspberries', image: '/images/berries/raspberries.webp', latin: 'Rubus idaeus', name: { en: 'Raspberries', ar: 'توت العليق' }, hs: '0810.20', forms: spec('Fresh or frozen', 'طازج أو مجمّد') },
     ],
     specs: [
       { label: spec('Formats', 'الأشكال'), value: spec('Fresh, frozen — per enquiry', 'طازج، مجمّد — حسب الاستفسار') },
@@ -214,8 +216,8 @@ export const categories: Category[] = [
       { src: '/images/wheat-rice/ears.webp', alt: { en: 'Ears of wheat', ar: 'سنابل القمح' } },
     ],
     items: [
-      { id: 'rice', latin: 'Oryza sativa', name: { en: 'Rice', ar: 'الأرز' }, hs: '1006.30', forms: spec('Basmati & non-basmati, raw / parboiled', 'بسمتي وغير بسمتي، أبيض / مسلوق جزئيًا') },
-      { id: 'wheat', latin: 'Triticum aestivum', name: { en: 'Wheat', ar: 'القمح' }, hs: '1001.99', forms: spec('Milling-quality grain', 'حبوب صالحة للطحن') },
+      { id: 'rice', image: '/images/products/rice.webp', latin: 'Oryza sativa', name: { en: 'Rice', ar: 'الأرز' }, hs: '1006.30', forms: spec('Basmati & non-basmati, raw / parboiled', 'بسمتي وغير بسمتي، أبيض / مسلوق جزئيًا') },
+      { id: 'wheat', image: '/images/products/wheat.webp', latin: 'Triticum aestivum', name: { en: 'Wheat', ar: 'القمح' }, hs: '1001.99', forms: spec('Milling-quality grain', 'حبوب صالحة للطحن') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: originIndia },
@@ -243,9 +245,9 @@ export const categories: Category[] = [
       { src: '/images/cosmetics-perfumes/viraz-golden-flora.webp', alt: { en: 'VIRAZ Golden Flora eau de parfum', ar: 'عطر VIRAZ Golden Flora' } },
     ],
     items: [
-      { id: 'natural-soap', name: { en: 'Handmade Natural Soap', ar: 'صابون طبيعي مصنوع يدويًا' }, hs: '3401.11', forms: spec('Bars, gift packs, private label', 'قوالب، علب هدايا، علامة خاصة') },
-      { id: 'hair-oil', name: { en: 'Herbal Hair Oil', ar: 'زيت الشعر العشبي' }, hs: '3305.90', forms: spec('Bottles, private label', 'زجاجات، علامة خاصة') },
-      { id: 'perfumes', name: { en: 'Perfumes & Fragrance Oils', ar: 'العطور والزيوت العطرية' }, hs: '3303.00', forms: spec('Eau de parfum, attar / fragrance oils', 'ماء عطر، عطور زيتية') },
+      { id: 'natural-soap', image: '/images/plates/soap.webp', name: { en: 'Handmade Natural Soap', ar: 'صابون طبيعي مصنوع يدويًا' }, hs: '3401.11', forms: spec('Bars, gift packs, private label', 'قوالب، علب هدايا، علامة خاصة') },
+      { id: 'hair-oil', image: '/images/cosmetics-perfumes/hair-oil.webp', name: { en: 'Herbal Hair Oil', ar: 'زيت الشعر العشبي' }, hs: '3305.90', forms: spec('Bottles, private label', 'زجاجات، علامة خاصة') },
+      { id: 'perfumes', image: '/images/cosmetics-perfumes/fragrance-oil.webp', name: { en: 'Perfumes & Fragrance Oils', ar: 'العطور والزيوت العطرية' }, hs: '3303.00', forms: spec('Eau de parfum, attar / fragrance oils', 'ماء عطر، عطور زيتية') },
     ],
     specs: [
       { label: spec('Origin', 'المنشأ'), value: originIndia },

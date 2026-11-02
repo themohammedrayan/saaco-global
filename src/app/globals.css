@@ -1,111 +1,91 @@
 @import 'tailwindcss';
 
 /* ------------------------------------------------------------------
-   SAACO Global — "Spice-trade ledger"
-   Paper, ink and one sealing-wax red. Hairline rules, no rounded
-   corners, Caslon display + Plex Mono for the data of trade.
+   SAACO Global — brand system taken from the logo:
+   royal navy + gold on warm white. Heavy uppercase headings,
+   dense content, solid cards.
    ------------------------------------------------------------------ */
 @theme {
-  --color-paper: #f3eee3;
-  --color-paper-2: #e9e2d2;
-  --color-paper-3: #ddd4c0;
-  --color-ink: #16130f;
-  --color-ink-2: #3a342c;
-  --color-muted: #6e665a;
-  --color-rule: rgb(22 19 15 / 0.16);
-  --color-rule-strong: rgb(22 19 15 / 0.7);
-  --color-wax: #a1271c;
-  --color-wax-2: #7f1d15;
-  --color-night: #13110e;
+  --color-navy-950: #071a44;
+  --color-navy-900: #0a2257;
+  --color-navy-800: #0d2a6b;
+  --color-navy-700: #143584;
+  --color-navy-600: #1d4396;
+  --color-navy-100: #e4eaf7;
+  --color-navy-50: #f2f5fb;
+  --color-gold-600: #b8871a;
+  --color-gold-500: #d4a32a;
+  --color-gold-400: #e2b94d;
+  --color-gold-100: #f7ecd0;
+  --color-gold-50: #fcf7ea;
+  --color-cream: #faf7f1;
+  --color-mist: #f1f3f7;
+  --color-ink: #111827;
+  --color-ink-2: #374151;
+  --color-muted: #5b6474;
+  --color-line: #e3e6ee;
 
-  --font-display: var(--font-display-en), 'Times New Roman', serif;
-  --font-serif: var(--font-serif-en), Georgia, serif;
-  --font-sans: var(--font-sans-en), system-ui, sans-serif;
-  --font-mono: var(--font-mono-plex), ui-monospace, monospace;
+  --font-heading: var(--font-heading-en), 'Arial Black', system-ui, sans-serif;
+  --font-sans: var(--font-body-en), system-ui, sans-serif;
 
-  --radius-none: 0;
+  --shadow-card: 0 1px 2px rgb(7 26 68 / 0.06), 0 8px 24px -12px rgb(7 26 68 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(7 26 68 / 0.06), 0 22px 40px -18px rgb(7 26 68 / 0.35);
 
-  --animate-ticker: ticker 60s linear infinite;
-  @keyframes ticker {
+  --animate-fade-in: fade-in 0.9s ease both;
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  --animate-kenburns: kenburns 14s ease-out both;
+  @keyframes kenburns {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+  --animate-marquee: marquee 45s linear infinite;
+  @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  --animate-spin-slow: spin 40s linear infinite;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
-  background: var(--color-paper);
+  background: #fff;
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-feature-settings: 'kern', 'liga';
 }
 
-/* Arabic: Amiri (classical naskh) for display, Plex Arabic for text */
 html[lang='ar'] {
-  --font-display: var(--font-display-ar), serif;
-  --font-serif: var(--font-display-ar), serif;
-  --font-sans: var(--font-sans-ar), system-ui, sans-serif;
+  --font-heading: var(--font-ar), system-ui, sans-serif;
+  --font-sans: var(--font-ar), system-ui, sans-serif;
 }
-html[lang='ar'] body { line-height: 1.8; }
-html[lang='ar'] .tracking-label { letter-spacing: 0 !important; }
+html[lang='ar'] body { line-height: 1.75; }
+html[lang='ar'] .uppercase { text-transform: none; }
+html[lang='ar'] .tracking-wide, html[lang='ar'] .tracking-wider, html[lang='ar'] .tracking-widest { letter-spacing: 0; }
 html[dir='rtl'] .flip-rtl { transform: scaleX(-1); }
-html[dir='rtl'] .animate-ticker { animation-direction: reverse; }
+html[dir='rtl'] .animate-marquee { animation-direction: reverse; }
 
-/* Small-caps mono label: the voice of the ledger */
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  line-height: 1.4;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-html[lang='ar'] .label { font-family: var(--font-sans); letter-spacing: 0; font-size: 0.8rem; text-transform: none; }
+/* One consistent treatment so mixed stock/AI photography reads as a set */
+.photo { filter: saturate(1.05) contrast(1.04); }
 
-/* Unify AI/stock photography into one printed, warm register */
-.plate-img {
-  filter: saturate(0.78) contrast(1.04) sepia(0.12);
-  transition: filter 0.6s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.group:hover .plate-img, .plate-img:hover { filter: saturate(1) contrast(1.02) sepia(0); }
+::selection { background: var(--color-gold-400); color: var(--color-navy-950); }
+:focus-visible { outline: 2px solid var(--color-gold-500); outline-offset: 3px; border-radius: 4px; }
 
-/* Paper grain */
-.paper-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Ledger ruling for tables */
-.ledger-row { border-bottom: 1px solid var(--color-rule); }
-.ledger-row:hover { background: rgb(161 39 28 / 0.04); }
-
-::selection { background: var(--color-wax); color: var(--color-paper); }
-
-:focus-visible { outline: 2px solid var(--color-wax); outline-offset: 3px; }
+/* Hide scrollbars on snap rows but keep them scrollable */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
 /* Scroll reveal (progressive: visible without JS) */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .js [data-reveal].is-visible { opacity: 1; transform: none; }
-
-/* Underline link that draws in */
-.ink-link {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 100% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.3s ease;
-  padding-bottom: 2px;
-}
-.ink-link:hover { background-size: 0 1px; background-position: 100% 100%; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

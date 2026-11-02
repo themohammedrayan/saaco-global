@@ -1,94 +1,107 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Download, Mail, MapPin, Phone } from 'lucide-react'
 import { href, tr, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { categories } from '@/content/products'
 import { countries, site, waLink } from '@/content/site'
+import { WhatsAppIcon } from './Icon'
 import { Container } from './ui'
 
-const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+function ColTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-5 font-heading text-sm font-extrabold uppercase tracking-wider text-white">
+      {children}
+      <span aria-hidden className="mt-2 block h-0.5 w-8 bg-gold-500" />
+    </h2>
+  )
+}
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = getDict(locale)
+  const ar = locale === 'ar'
   const year = new Date().getFullYear()
   const links = [
-    ['/products', t.nav.products], ['/export', t.nav.export], ['/services', t.nav.services],
-    ['/about', t.nav.about], ['/faq', t.nav.faq], ['/quote', t.nav.quote], ['/contact', t.nav.contact],
+    ['/', t.nav.home], ['/about', t.nav.about], ['/products', t.nav.products], ['/services', t.nav.services],
+    ['/export', t.nav.export], ['/faq', t.nav.faq], ['/quote', t.nav.quote], ['/contact', t.nav.contact],
   ] as const
   const socials = Object.entries(site.social).filter(([, url]) => url)
 
   return (
-    <footer className="bg-night text-paper/75">
-      <Container className="pt-20">
-        <div className="grid gap-12 border-t border-paper/30 pt-10 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <div className="mb-8 inline-block bg-paper px-4 py-3">
-              <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={660} height={306} sizes="220px" className="h-20 w-auto" />
-            </div>
-            <p className="label text-paper/50">{locale === 'ar' ? 'المراسلات' : 'Correspondence'}</p>
-            <address className="mt-5 space-y-2 not-italic leading-relaxed">
-              <p className="text-paper">{site.name}</p>
-              <p>{tr(site.address.lines, locale)}</p>
-              <p><a dir="ltr" className="ink-link text-paper" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a></p>
-              <p><a className="ink-link text-paper" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
-              <p><a className="ink-link text-paper" href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp</a></p>
-            </address>
-            {socials.length > 0 && (
-              <ul className="mt-6 flex gap-5">
-                {socials.map(([k, url]) => (
-                  <li key={k}><a className="label ink-link" href={url} target="_blank" rel="noopener noreferrer">{k}</a></li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="lg:col-span-3">
-            <p className="label text-paper/50">{t.footer.categories}</p>
-            <ol className="mt-5 space-y-2.5">
-              {categories.map((c, i) => (
-                <li key={c.slug} className="flex gap-3">
-                  <span className="label w-8 pt-0.5 text-paper/40">{roman[i]}.</span>
-                  <Link className="hover:text-paper" href={href(locale, `/products/${c.slug}`)}>{tr(c.name, locale)}</Link>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="lg:col-span-2">
-            <p className="label text-paper/50">{t.footer.explore}</p>
-            <ul className="mt-5 space-y-2.5">
-              {links.map(([p, l]) => <li key={p}><Link className="hover:text-paper" href={href(locale, p)}>{l}</Link></li>)}
-            </ul>
-          </div>
-          <div className="lg:col-span-3">
-            <p className="label text-paper/50">{locale === 'ar' ? 'الكتالوج' : 'Catalogue'}</p>
-            <p className="mt-5 leading-relaxed">{t.footer.about}</p>
-            <a href="/catalogue/saaco-global-catalogue.pdf" download className="label mt-6 inline-flex items-center gap-3 border border-paper/50 px-5 py-3 text-paper hover:bg-paper hover:text-ink">
-              {t.common.downloadCatalogue} · PDF
+    <footer className="bg-navy-950 text-[0.95rem] text-white/70">
+      <div aria-hidden className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
+      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <span className="inline-block rounded-lg bg-white px-4 py-3">
+            <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={660} height={306} sizes="200px" className="h-20 w-auto" />
+          </span>
+          <p className="mt-6 max-w-sm leading-relaxed">{t.footer.about}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="/catalogue/saaco-global-catalogue.pdf" download className="inline-flex items-center gap-2 rounded-md bg-gold-500 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-navy-950 hover:bg-gold-400">
+              <Download className="size-4" aria-hidden /> {t.common.downloadCatalogue}
+            </a>
+            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-md bg-[#25D366] px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white hover:bg-[#1eb956]">
+              <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           </div>
+          {socials.length > 0 && (
+            <ul className="mt-6 flex gap-3">
+              {socials.map(([k, url]) => (
+                <li key={k}><a className="inline-grid size-9 place-items-center rounded-full bg-white/10 text-xs font-bold uppercase hover:bg-gold-500 hover:text-navy-950" href={url} target="_blank" rel="noopener noreferrer" aria-label={k}>{k.slice(0, 2)}</a></li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="lg:col-span-2">
+          <ColTitle>{ar ? 'روابط سريعة' : 'Quick links'}</ColTitle>
+          <ul className="space-y-2.5">
+            {links.map(([p, l]) => <li key={p}><Link className="hover:text-gold-400" href={href(locale, p)}>{l}</Link></li>)}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <ColTitle>{t.footer.categories}</ColTitle>
+          <ul className="space-y-2.5">
+            {categories.map((c) => (
+              <li key={c.slug}><Link className="hover:text-gold-400" href={href(locale, `/products/${c.slug}`)}>{tr(c.name, locale)}</Link></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <ColTitle>{ar ? 'المكتب الرئيسي — الهند' : 'Head office — India'}</ColTitle>
+          <ul className="space-y-4">
+            <li className="flex gap-3"><MapPin className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><span>{site.name}<br />{tr(site.address.lines, locale)}</span></li>
+            <li className="flex gap-3"><Phone className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a dir="ltr" className="hover:text-gold-400" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a></li>
+            <li className="flex gap-3"><Mail className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a className="break-all hover:text-gold-400" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+          </ul>
+          <h3 className="mb-3 mt-8 font-heading text-xs font-extrabold uppercase tracking-wider text-white">{ar ? 'الأسواق التي نخدمها' : 'Markets we serve'}</h3>
+          <ul className="flex flex-wrap gap-2">
+            {countries.map((c) => (
+              <li key={c.code} className="rounded-full border border-white/15 px-3 py-1 text-xs">{tr(c.name, locale)}</li>
+            ))}
+          </ul>
         </div>
       </Container>
-      <div className="overflow-hidden">
-        <p aria-hidden className="select-none whitespace-nowrap text-center font-display text-[15vw] leading-[0.8] text-paper/[0.07]" dir="ltr">
-          SAACO Global
-        </p>
-      </div>
-      <Container>
-        <div className="label grid gap-4 border-t border-paper/20 py-6 text-paper/50 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <p>© {year} {site.legalName} · {locale === 'ar' ? `منذ ${site.foundedYear}` : `Est. ${site.foundedYear}`}</p>
-          <ul aria-label={locale === 'ar' ? 'أين نعمل' : 'Where we trade'} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-paper/85 lg:justify-center">
+
+      <div className="border-t border-white/10">
+        <Container className="grid gap-3 py-5 text-xs lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+          <p>© {year} {site.legalName}. {t.footer.rights}</p>
+          <ul aria-label={ar ? 'أين نعمل' : 'Where we trade'} className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-semibold text-white lg:justify-center">
             {countries.map((c, i) => (
-              <li key={c.code} className="flex items-center gap-3">
-                {i > 0 && <span aria-hidden className="text-wax">✦</span>}
-                <span>{tr(c.name, locale)}</span>
+              <li key={c.code} className="flex items-center gap-2.5">
+                {i > 0 && <span aria-hidden className="text-gold-500">•</span>}
+                {tr(c.name, locale)}
               </li>
             ))}
           </ul>
-          <div className="flex gap-6 lg:justify-end">
-            <Link className="hover:text-paper" href={href(locale, '/legal')}>{t.footer.legal}</Link>
-            <Link className="hover:text-paper" href={href(locale, '/privacy')}>{t.footer.privacy}</Link>
+          <div className="flex gap-5 lg:justify-end">
+            <Link className="hover:text-gold-400" href={href(locale, '/legal')}>{t.footer.legal}</Link>
+            <Link className="hover:text-gold-400" href={href(locale, '/privacy')}>{t.footer.privacy}</Link>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </footer>
   )
 }
