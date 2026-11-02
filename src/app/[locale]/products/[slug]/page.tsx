@@ -1,17 +1,17 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { ArrowRight } from 'lucide-react'
 import { href, locales, tr } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { categories, getCategory } from '@/content/products'
 import { site } from '@/content/site'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
-import { PageHero } from '@/components/PageHero'
-import { AddToQuote, RequestSamples } from '@/components/AddToQuote'
-import { CategoryCard, CtaBand, roman } from '@/components/sections'
+import { PageBanner } from '@/components/PageBanner'
+import { RequestSamples } from '@/components/AddToQuote'
+import { CategoryTile, CtaBand, FaqList, ProductCard } from '@/components/sections'
 import { Img } from '@/components/Img'
 import { JsonLd } from '@/components/JsonLd'
-import { Arrow, ButtonLink, RunningHead, Section } from '@/components/ui'
+import { ButtonLink, Section, SectionTitle } from '@/components/ui'
 
 export const dynamicParams = false
 export const generateStaticParams = () => locales.flatMap((locale) => categories.map((c) => ({ locale, slug: c.slug })))
@@ -30,96 +30,75 @@ export default async function CategoryPage({ params }: PageProps<'/[locale]/prod
   if (!c) notFound()
   const t = getDict(locale)
   const ar = locale === 'ar'
-  const idx = categories.indexOf(c)
-  const others = categories.filter((o) => o.slug !== c.slug).slice(0, 3)
+  const others = categories.filter((o) => o.slug !== c.slug)
   const sampleLines = c.items.map((i) => ({ id: i.id, name: i.name.en, category: c.name.en }))
 
   return (
     <>
-      <PageHero
+      <PageBanner
         locale={locale}
-        no={`P-${roman[idx]}`}
-        eyebrow={`${ar ? 'لوحة' : 'Plate'} ${roman[idx]} · ${t.products.eyebrow}`}
+        eyebrow={`${c.items.length} ${ar ? 'منتجات' : 'products'}`}
         title={tr(c.name, locale)}
         body={tr(c.short, locale)}
         image={c.cover}
-        caption={`${ar ? 'لوحة' : 'Plate'} ${roman[idx]} — ${tr(c.name, locale)}`}
         crumbs={[{ label: t.nav.products, path: '/products' }, { label: tr(c.name, locale) }]}
       >
-        <div className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href={href(locale, '/quote')}>{t.common.requestQuote} <Arrow /></ButtonLink>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <ButtonLink href={href(locale, '/quote')}>{t.common.requestQuote} <ArrowRight className="flip-rtl size-4" /></ButtonLink>
           <RequestSamples locale={locale} lines={sampleLines} />
         </div>
-      </PageHero>
+      </PageBanner>
 
       <Section>
-        <div className="grid gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <RunningHead no="01">{ar ? 'وصف' : 'Description'}</RunningHead>
-            <p data-reveal className="mt-8 font-serif text-xl leading-relaxed text-ink-2 first-letter:float-start first-letter:me-3 first-letter:font-display first-letter:text-[5rem] first-letter:leading-[0.8] first-letter:text-wax sm:text-2xl rtl:first-letter:float-none rtl:first-letter:me-0 rtl:first-letter:text-inherit">
-              {tr(c.intro, locale)}
-            </p>
-
-            <RunningHead no="02" className="mt-16">{t.products.items}</RunningHead>
-            <ul className="mt-2">
-              {c.items.map((i, n) => (
-                <li key={i.id} data-reveal className="ledger-row grid gap-4 py-6 sm:grid-cols-[4rem_1fr_auto] sm:items-center">
-                  <span className="label text-muted" dir="ltr">SG-{roman[idx]}-{String(n + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3 className="font-display text-3xl leading-tight">{tr(i.name, locale)}</h3>
-                    {i.latin && <p className="mt-1 font-serif italic text-ink-2" dir="ltr">{i.latin}</p>}
-                    <p className="mt-2 text-sm text-ink-2">{t.products.forms}: {tr(i.forms, locale)} <span className="font-mono text-xs text-muted" dir="ltr">· HS {i.hs}</span></p>
-                  </div>
-                  <AddToQuote locale={locale} id={i.id} name={i.name.en} category={c.name.en} />
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <aside className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
-            <div className="border border-ink bg-paper-2">
-              <h2 className="label flex justify-between border-b border-ink bg-ink px-5 py-3 text-paper">
-                <span>{t.products.specs}</span><span dir="ltr">{roman[idx]}</span>
-              </h2>
-              <dl>
-                {c.specs.map((s, k) => (
-                  <div key={k} className="grid grid-cols-[8rem_1fr] gap-4 border-b border-rule px-5 py-4 text-sm">
-                    <dt className="label pt-0.5 text-muted">{tr(s.label, locale)}</dt>
-                    <dd>{tr(s.value, locale)}</dd>
-                  </div>
-                ))}
-                <div className="grid grid-cols-[8rem_1fr] gap-4 border-b border-rule px-5 py-4 text-sm">
-                  <dt className="label pt-0.5 text-muted">{ar ? 'الشحن' : 'Shipping'}</dt>
-                  <dd>FOB / CIF — {tr(site.port, locale)}</dd>
+        <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
+          <div>
+            <SectionTitle kicker={ar ? 'نظرة عامة' : 'Overview'} title={tr(c.name, locale)} className="!mb-6" />
+            <p className="text-[1.05rem] leading-relaxed text-ink-2">{tr(c.intro, locale)}</p>
+            <div className="mt-8 grid grid-cols-3 gap-3">
+              {c.gallery.slice(0, 3).map((g) => (
+                <div key={g.src} className="relative aspect-square overflow-hidden rounded-lg bg-mist">
+                  <Img src={g.src} alt={tr(g.alt, locale)} fill sizes="(min-width:1024px) 15vw, 30vw" className="photo object-cover" />
                 </div>
-              </dl>
-              <p className="px-5 py-4 font-serif text-sm italic leading-relaxed text-ink-2">{t.products.specNote}</p>
+              ))}
             </div>
+          </div>
+          <aside className="self-start overflow-hidden rounded-lg border border-line bg-white shadow-card lg:sticky lg:top-32">
+            <h2 className="bg-navy-900 px-5 py-4 font-heading text-base font-extrabold uppercase text-white">{t.products.specs}</h2>
+            <dl>
+              {c.specs.map((s, k) => (
+                <div key={k} className={`grid grid-cols-[8.5rem_1fr] gap-4 px-5 py-3.5 text-sm ${k % 2 === 0 ? 'bg-mist/60' : ''}`}>
+                  <dt className="font-bold text-navy-800">{tr(s.label, locale)}</dt>
+                  <dd className="text-ink-2">{tr(s.value, locale)}</dd>
+                </div>
+              ))}
+              <div className="grid grid-cols-[8.5rem_1fr] gap-4 px-5 py-3.5 text-sm">
+                <dt className="font-bold text-navy-800">{ar ? 'الشحن' : 'Shipping'}</dt>
+                <dd className="text-ink-2">FOB / CIF — {tr(site.port, locale)}</dd>
+              </div>
+            </dl>
+            <p className="border-t border-line bg-gold-50 px-5 py-3 text-xs leading-relaxed text-muted">{t.products.specNote}</p>
           </aside>
         </div>
       </Section>
 
-      <Section tone="paper-2" className="border-y border-ink">
-        <RunningHead no="03">{t.products.gallery}</RunningHead>
-        <div className="mt-8 grid auto-rows-[13rem] grid-cols-2 gap-4 md:auto-rows-[16rem] md:grid-cols-4">
-          {c.gallery.map((gi, i) => (
-            <figure key={gi.src} data-reveal className={i === 0 ? 'col-span-2 row-span-2 flex flex-col' : 'flex flex-col'}>
-              <div className="relative flex-1 overflow-hidden border border-ink bg-paper">
-                <Img src={gi.src} alt={tr(gi.alt, locale)} fill sizes={i === 0 ? '(min-width:768px) 50vw, 100vw' : '(min-width:768px) 25vw, 50vw'} className="plate-img object-cover" />
-              </div>
-              <figcaption className="label mt-2 truncate text-muted">{ar ? 'شكل' : 'Fig.'} {i + 1} — {tr(gi.alt, locale)}</figcaption>
-            </figure>
-          ))}
+      <Section tone="mist">
+        <SectionTitle kicker={t.products.eyebrow} title={t.products.items} />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {c.items.map((i) => <ProductCard key={i.id} c={c} i={i} locale={locale} />)}
         </div>
       </Section>
 
       <Section>
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-          <RunningHead no="04" className="flex-1">{t.products.otherCategories}</RunningHead>
-          <Link href={href(locale, '/products')} className="label ink-link hover:text-wax">{t.common.backToProducts}</Link>
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+          <SectionTitle kicker={t.v3.faqKicker} title={ar ? 'أسئلة قبل الطلب' : 'Before you order'} lead={t.faq.body} />
+          <FaqList locale={locale} limit={4} />
         </div>
-        <div className="grid gap-x-8 gap-y-12 md:grid-cols-3">
-          {others.map((o) => <CategoryCard key={o.slug} c={o} locale={locale} index={categories.indexOf(o)} />)}
+      </Section>
+
+      <Section tone="cream">
+        <SectionTitle kicker={t.products.otherCategories} title={ar ? 'استكشف فئات أخرى' : 'Explore other categories'} />
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {others.map((o) => <CategoryTile key={o.slug} c={o} locale={locale} />)}
         </div>
       </Section>
 
@@ -130,17 +109,7 @@ export default async function CategoryPage({ params }: PageProps<'/[locale]/prod
         '@type': 'ItemList',
         name: tr(c.name, locale),
         itemListElement: c.items.map((i, k) => ({
-          '@type': 'ListItem',
-          position: k + 1,
-          item: {
-            '@type': 'Product',
-            name: tr(i.name, locale),
-            description: `${tr(i.forms, locale)} — ${tr(c.short, locale)}`,
-            image: `${site.url}${c.cover}`,
-            category: tr(c.name, locale),
-            brand: { '@type': 'Brand', name: site.name },
-            countryOfOrigin: 'IN',
-          },
+          '@type': 'ListItem', position: k + 1, name: tr(i.name, locale), url: `${site.url}${href(locale, `/products/${c.slug}/${i.id}`)}`,
         })),
       }} />
     </>

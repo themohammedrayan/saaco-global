@@ -5,7 +5,11 @@ import { site } from '@/content/site'
 
 export const dynamic = 'force-static'
 
-const PATHS = ['', '/products', '/export', '/services', '/about', '/faq', '/quote', '/contact', ...categories.map((c) => `/products/${c.slug}`)]
+const PATHS = [
+  '', '/products', '/export', '/services', '/about', '/faq', '/quote', '/contact',
+  ...categories.map((c) => `/products/${c.slug}`),
+  ...categories.flatMap((c) => c.items.map((i) => `/products/${c.slug}/${i.id}`)),
+]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()

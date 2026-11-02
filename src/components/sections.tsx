@@ -13,8 +13,8 @@ import { ButtonLink, Card, Container, Kicker, cx } from './ui'
 
 export const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 
-/** Link target for a product. TODO(phase 3): point at /products/[slug]/[product] once product pages exist. */
-export const productPath = (c: Category, i: ProductItem) => `/products/${c.slug}#${i.id}`
+/** Link target for a product page. */
+export const productPath = (c: Category, i: ProductItem) => `/products/${c.slug}/${i.id}`
 
 export const enquireText = (locale: Locale, name: string) =>
   locale === 'ar'
@@ -49,10 +49,10 @@ export function CategoryCard({ c, locale }: { c: Category; locale: Locale; index
 }
 
 /* ---------------- Product card ---------------- */
-export function ProductCard({ c, i, locale, className }: { c: Category; i: ProductItem; locale: Locale; className?: string }) {
+export function ProductCard({ c, i, locale, className, reveal = true }: { c: Category; i: ProductItem; locale: Locale; className?: string; reveal?: boolean }) {
   const name = tr(i.name, locale)
   return (
-    <article data-reveal className={cx('group flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card transition hover:shadow-lift', className)}>
+    <article data-reveal={reveal || undefined} className={cx('group flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card transition hover:shadow-lift', className)}>
       <Link href={href(locale, productPath(c, i))} className="relative block aspect-[4/3] overflow-hidden bg-mist">
         <Img src={i.image} alt={name} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 45vw, 80vw" className="photo object-cover transition-transform duration-500 group-hover:scale-105" />
         <span className="absolute start-3 top-3 rounded bg-navy-900/90 px-2 py-1 text-[0.68rem] font-bold uppercase tracking-wide text-white">{tr(c.name, locale)}</span>
