@@ -7,16 +7,12 @@ export function Container({ className, children }: { className?: string; childre
   return <div className={cx('mx-auto w-full max-w-[80rem] px-4 sm:px-6 lg:px-8', className)}>{children}</div>
 }
 
-type Tone = 'white' | 'cream' | 'mist' | 'navy' | 'paper' | 'paper-2' | 'night'
+type Tone = 'white' | 'cream' | 'mist' | 'navy'
 const tones: Record<Tone, string> = {
   white: 'bg-white text-ink',
   cream: 'bg-cream text-ink',
   mist: 'bg-mist text-ink',
   navy: 'bg-navy-900 text-white',
-  // aliases kept for pages not yet migrated
-  paper: 'bg-white text-ink',
-  'paper-2': 'bg-mist text-ink',
-  night: 'bg-navy-900 text-white',
 }
 
 export function Section({ id, className, children, tone = 'white' }: { id?: string; className?: string; children: ReactNode; tone?: Tone }) {
@@ -54,18 +50,13 @@ export function SectionTitle({
   )
 }
 
-type Variant = 'gold' | 'navy' | 'outline' | 'light' | 'whatsapp' | 'ink' | 'wax' | 'line' | 'line-light'
+type Variant = 'gold' | 'navy' | 'outline' | 'light' | 'whatsapp'
 const variants: Record<Variant, string> = {
   gold: 'bg-gold-500 text-navy-950 hover:bg-gold-400 shadow-sm',
   navy: 'bg-navy-800 text-white hover:bg-navy-700',
   outline: 'border-2 border-navy-800 text-navy-800 hover:bg-navy-800 hover:text-white',
   light: 'border-2 border-white/70 text-white hover:bg-white hover:text-navy-900',
   whatsapp: 'bg-[#25D366] text-white hover:bg-[#1eb956]',
-  // aliases kept for pages not yet migrated
-  ink: 'bg-navy-800 text-white hover:bg-navy-700',
-  wax: 'bg-gold-500 text-navy-950 hover:bg-gold-400',
-  line: 'border-2 border-navy-800 text-navy-800 hover:bg-navy-800 hover:text-white',
-  'line-light': 'border-2 border-white/70 text-white hover:bg-white hover:text-navy-900',
 }
 export const buttonClass = (v: Variant = 'gold', extra?: string) =>
   cx(
@@ -97,14 +88,4 @@ export const Arrow = ({ className }: { className?: string }) => (
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
   return <div className={cx('rounded-lg border border-line bg-white shadow-card', className)}>{children}</div>
-}
-
-/* ---- Compatibility helpers for pages migrated in a later step ---- */
-export function RunningHead({ children, light, className }: { no?: string; children: ReactNode; light?: boolean; className?: string }) {
-  return <div className={className}><Kicker light={light}>{children}</Kicker></div>
-}
-export function SectionHeading({
-  kicker, title, body, light, className, children,
-}: { no?: string; kicker: string; title: ReactNode; body?: string; light?: boolean; className?: string; children?: ReactNode }) {
-  return <SectionTitle kicker={kicker} title={title} lead={body} light={light} className={className} action={children} />
 }

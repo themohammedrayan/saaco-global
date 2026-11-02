@@ -1,12 +1,13 @@
 import { tr } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
-import { pillars, services } from '@/content/company'
+import { pillars } from '@/content/company'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
-import { PageHero } from '@/components/PageHero'
-import { Img } from '@/components/Img'
+import { PageBanner } from '@/components/PageBanner'
+import { ServicesTabs } from '@/components/ServicesTabs'
+import { Icon } from '@/components/Icon'
 import { CtaBand, ProcessSteps } from '@/components/sections'
-import { RunningHead, Section, SectionHeading, cx } from '@/components/ui'
+import { Section, SectionTitle } from '@/components/ui'
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/services'>) {
   const locale = await getLocale(params)
@@ -14,59 +15,45 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/services
   return pageMeta(locale, '/services', t.services.title, t.services.body, '/images/services/production.webp')
 }
 
-const roman = ['I', 'II', 'III']
-
 export default async function ServicesPage({ params }: PageProps<'/[locale]/services'>) {
   const locale = await getLocale(params)
   const t = getDict(locale)
   const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} no="004" eyebrow={t.services.eyebrow} title={t.services.title} body={t.services.body} crumbs={[{ label: t.nav.services }]} />
+      <PageBanner locale={locale} eyebrow={t.services.eyebrow} title={t.services.title} body={t.services.body} image="/images/plates/delivery.webp" crumbs={[{ label: t.nav.services }]} />
+      <Section tone="mist">
+        <ServicesTabs locale={locale} />
+      </Section>
       <Section>
-        <div className="space-y-24">
-          {services.map((s, i) => (
-            <article key={s.id} id={s.id} className="grid scroll-mt-28 gap-10 lg:grid-cols-12 lg:items-start">
-              <div data-reveal className={cx('lg:col-span-6', i % 2 === 1 && 'lg:order-last')}>
-                <div className="relative aspect-[4/3] overflow-hidden border border-ink bg-paper-2">
-                  <Img src={s.image} alt={tr(s.title, locale)} fill sizes="(min-width:1024px) 50vw, 100vw" className="plate-img object-cover" />
-                </div>
-                <p className="label mt-3 text-muted">{ar ? 'شكل' : 'Fig.'} {roman[i]} — {tr(s.title, locale)}</p>
+        <SectionTitle kicker={t.v3.brandKicker} title={t.v3.brandTitle} lead={t.v3.brandLead} center />
+        <div className="grid gap-5 md:grid-cols-2">
+          {t.v3.brandCards.map((b, k) => (
+            <div key={k} data-reveal className="flex gap-5 rounded-lg border border-line bg-white p-6 shadow-card">
+              <span className="grid size-14 shrink-0 place-items-center rounded-md bg-navy-800 text-gold-400"><Icon name={k === 0 ? 'tag' : 'package'} className="size-7" /></span>
+              <div>
+                <h3 className="font-heading text-lg font-extrabold uppercase text-navy-900">{b.t}</h3>
+                <p className="mt-2 leading-relaxed text-muted">{b.b}</p>
               </div>
-              <div data-reveal className="lg:col-span-6">
-                <RunningHead no={String(i + 1).padStart(2, '0')}>{t.services.eyebrow}</RunningHead>
-                <h2 className="mt-8 font-display text-5xl leading-[1.02] sm:text-6xl">{tr(s.title, locale)}</h2>
-                <p className="mt-6 font-serif text-xl leading-relaxed text-ink-2">{tr(s.body, locale)}</p>
-                <ol className="mt-8 border-t border-ink">
-                  {s.points.map((p, j) => (
-                    <li key={j} className="ledger-row flex items-baseline gap-5 py-4">
-                      <span className="label text-wax">{String(j + 1).padStart(2, '0')}</span>
-                      <span className="font-display text-xl">{tr(p, locale)}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </article>
+            </div>
           ))}
         </div>
       </Section>
-      <Section tone="night">
-        <SectionHeading no="04" kicker={t.home.processEyebrow} title={t.home.processTitle} light />
+      <Section tone="navy">
+        <SectionTitle kicker={t.v3.deliverKicker} title={t.v3.deliverTitle} lead={t.v3.deliverLead} light center />
         <ProcessSteps locale={locale} light />
       </Section>
       <Section>
-        <SectionHeading no="05" kicker={t.about.values} title={ar ? 'ما يميّز الدار' : 'What sets the house apart'} />
-        <dl className="grid gap-px border border-ink bg-ink sm:grid-cols-2 lg:grid-cols-4">
+        <SectionTitle kicker={t.v3.whyKicker} title={ar ? 'ما يميّزنا' : 'What sets us apart'} center />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <div key={i} data-reveal className="bg-paper p-7">
-              <dt>
-                <span className="label text-wax">{String(i + 1).padStart(2, '0')}</span>
-                <span className="mt-4 block font-display text-2xl">{tr(p.title, locale)}</span>
-              </dt>
-              <dd className="mt-3 text-sm leading-relaxed text-ink-2">{tr(p.body, locale)}</dd>
+            <div key={i} data-reveal className="rounded-lg border border-line bg-white p-6 shadow-card">
+              <span className="grid size-12 place-items-center rounded-md bg-gold-100 text-gold-600"><Icon name={p.icon} className="size-6" /></span>
+              <h3 className="mt-5 font-heading text-base font-extrabold uppercase text-navy-900">{tr(p.title, locale)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{tr(p.body, locale)}</p>
             </div>
           ))}
-        </dl>
+        </div>
       </Section>
       <CtaBand locale={locale} />
     </>

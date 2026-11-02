@@ -3,6 +3,7 @@
 Bilingual (English / Arabic) B2B export website for **SAACO Global**, Perinthalmanna, Kerala, India.
 
 - **Stack:** Next.js 16 (App Router, static export) · TypeScript · Tailwind CSS 4 · lucide icons
+- **Design:** navy + gold brand system taken from the logo (`src/app/globals.css`), Archivo / Inter / Cairo (Arabic)
 - **Hosting:** Vercel. `vercel.json` handles the `/` → `/en` or `/ar` language redirect (Accept-Language) and the security/cache headers
 - **No backend.** Enquiries are composed in the browser and sent by the buyer through WhatsApp or email
 
@@ -11,7 +12,8 @@ Bilingual (English / Arabic) B2B export website for **SAACO Global**, Perinthalm
 | Feature | Where |
 |---|---|
 | English + Arabic (full RTL), hreflang, language switcher | `src/i18n/`, `app/[locale]/` |
-| 7 product categories with spec tables, indicative HS codes and galleries | `src/content/products.ts` |
+| Searchable catalogue, 7 category pages and a page per product (22 × EN/AR) | `src/content/products.ts`, `src/content/product-details.ts`, `app/[locale]/products/` |
+| Home: hero slider, category tiles, featured products, private label, why SAACO, workflow, global presence, quality & documents | `app/[locale]/page.tsx` |
 | **Quote basket**: add products, set qty/unit, send one RFQ by WhatsApp or email with a reference ID (`SG-YYMMDD-XXXX`) | `src/lib/enquiry.ts`, `src/components/QuoteForm.tsx` |
 | Sample requests (one click from any category) | `RequestSamples` in `src/components/AddToQuote.tsx` |
 | Downloadable PDF catalogue, regenerated from content on every build | `scripts/build-catalogue.mjs` → `public/catalogue/` |
@@ -37,11 +39,13 @@ These are sensible defaults and **must be confirmed by the business**:
 2. **Legal entity name** (`site.legalName`)
 3. **Export gateway:** Cochin port and airport, and FOB/CIF/CFR terms (`site.port`, `content/export.ts`)
 4. **Payment terms**, **documents** and **MOQ / samples** wording (`content/export.ts`, `content/faq.ts`, product specs)
-5. **Product list, forms and HS codes.** HS codes are indicative
+5. **Product list, forms, HS codes and product-page copy** (`content/product-details.ts`): features and uses. HS codes are indicative
+   - **Private label packing** is presented as a service; confirm it is offered. Grinding/blending is not claimed
 6. **Partner logos** (`content/company.ts → partners`). They come from the "Companies we work with" section of the old saacoglobal.com. Remove any company that hasn't agreed to be shown
 7. **Certifications** (IEC, FSSAI, APEDA, Spices Board…). Add them to `site.certifications` only if held
-8. **Stats** (`content/site.ts → stats`)
-9. **Domain.** Set `NEXT_PUBLIC_SITE_URL` in Vercel once the custom domain is connected. It defaults to `https://saacoglobal.com`
+8. **Countries** (`content/site.ts → countries`) are shown as *markets served*; only India has an address. Add office addresses if you have them
+9. **Photos**: all imagery is reused from the old site (cropped, colour-matched). Replace with real warehouse, packing and product photos when available
+10. **Domain.** Set `NEXT_PUBLIC_SITE_URL` in Vercel once the custom domain is connected. It defaults to `https://saacoglobal.com`
 
 ## Commands
 

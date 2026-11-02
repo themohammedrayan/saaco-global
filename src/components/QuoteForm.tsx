@@ -16,16 +16,16 @@ const UNITS: Unit[] = ['kg', 'mt', 'cartons', 'containers']
 const INCOTERMS = ['FOB', 'CIF', 'CFR', 'EXW']
 
 const inputCls =
-  'w-full border-0 border-b border-ink/40 bg-transparent px-0 py-3 text-ink placeholder:text-muted/70 transition focus:border-wax focus:outline-none focus:ring-0 aria-[invalid=true]:border-wax'
+  'w-full rounded-md border border-line bg-white px-3.5 py-3 text-ink placeholder:text-muted/70 transition focus:border-navy-600 focus:outline-none focus:ring-4 focus:ring-navy-600/10 aria-[invalid=true]:border-red-500'
 
 function Field({ label, id, required, error, children }: { label: string; id: string; required?: boolean; error?: string; children: ReactNode }) {
   return (
     <div>
-      <label htmlFor={id} className="label block text-muted">
-        {label}{required && <span className="text-wax" aria-hidden> *</span>}
+      <label htmlFor={id} className="mb-1.5 block text-sm font-bold text-navy-900">
+        {label}{required && <span className="text-red-600" aria-hidden> *</span>}
       </label>
       {children}
-      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-sm text-wax">{error}</p>}
+      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-sm text-red-600">{error}</p>}
     </div>
   )
 }
@@ -92,23 +92,23 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
   return (
     <form noValidate onSubmit={submit('wa')} className="min-w-0 space-y-8">
       {!compact && (
-        <fieldset className="min-w-0 border border-ink bg-paper p-6 sm:p-8">
+        <fieldset className="min-w-0 rounded-lg border border-line bg-white p-6 shadow-card sm:p-8">
           <legend className="sr-only">{q.title}</legend>
           {lines.length === 0 ? (
             <div className="text-center">
-              <p className="font-serif text-lg text-ink-2">{q.empty}</p>
-              <Link href={href(locale, '/products')} className={buttonClass('line', 'mt-6')}>{q.browse}</Link>
+              <p className="text-ink-2">{q.empty}</p>
+              <Link href={href(locale, '/products')} className={buttonClass('outline', 'mt-5')}>{q.browse}</Link>
             </div>
           ) : (
             <>
-              <ul className="border-t border-ink">
+              <ul className="divide-y divide-line">
                 {lines.map((l) => (
-                  <li key={l.id} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b border-rule py-4 sm:grid-cols-[1fr_8rem_11rem_auto]">
+                  <li key={l.id} className="grid grid-cols-[1fr_auto] items-center gap-3 py-4 sm:grid-cols-[1fr_8rem_11rem_auto]">
                     <div>
-                      <p className="font-display text-2xl leading-tight">{l.name}</p>
-                      <p className="label text-muted">{l.category}</p>
+                      <p className="font-heading font-extrabold uppercase text-navy-900">{l.name}</p>
+                      <p className="text-sm text-muted">{l.category}</p>
                     </div>
-                    <button type="button" onClick={() => dispatch({ type: 'remove', id: l.id })} aria-label={`${q.remove} ${l.name}`} className="p-2 text-muted hover:text-wax sm:order-last">
+                    <button type="button" onClick={() => dispatch({ type: 'remove', id: l.id })} aria-label={`${q.remove} ${l.name}`} className="rounded-md p-2 text-muted hover:bg-red-50 hover:text-red-600 sm:order-last">
                       <Trash2 className="size-4" aria-hidden />
                     </button>
                     <label className="sr-only" htmlFor={`qty-${l.id}`}>{q.quantity} — {l.name}</label>
@@ -121,28 +121,28 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
                   </li>
                 ))}
               </ul>
-              <button type="button" onClick={() => dispatch({ type: 'clear' })} className="label mt-4 text-muted hover:text-wax">{q.clear}</button>
+              <button type="button" onClick={() => dispatch({ type: 'clear' })} className="mt-4 text-sm font-semibold text-muted hover:text-red-600">{q.clear}</button>
             </>
           )}
-          {err('content') && <p role="alert" className="mt-4 text-sm text-wax">{err('content')}</p>}
+          {err('content') && <p role="alert" className="mt-4 text-sm text-red-600">{err('content')}</p>}
         </fieldset>
       )}
 
-      <fieldset className={cx('min-w-0', !compact && 'border border-ink bg-paper p-6 sm:p-8')}>
+      <fieldset className={cx('min-w-0', !compact && 'rounded-lg border border-line bg-white p-6 shadow-card sm:p-8')}>
         {!compact && (
           <>
             <legend className="sr-only">{q.details}</legend>
-            <h2 aria-hidden className="mb-6 font-display text-3xl">{q.details}</h2>
+            <h2 aria-hidden className="mb-6 font-heading text-xl font-extrabold uppercase text-navy-900">{q.details}</h2>
           </>
         )}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {!compact && (
             <div className="sm:col-span-2">
-              <p className="label mb-3 text-muted">{q.type}</p>
+              <p className="mb-2 text-sm font-bold text-navy-900">{q.type}</p>
               <div role="radiogroup" className="flex flex-wrap gap-2">
                 {([['quote', q.typeQuote], ['sample', q.typeSample], ['general', q.typeGeneral]] as const).map(([v, l]) => (
-                  <label key={v} className={cx('label cursor-pointer border px-4 py-2.5 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-wax',
-                    type === v ? 'border-ink bg-ink text-paper' : 'border-ink/40 hover:border-ink')}>
+                  <label key={v} className={cx('cursor-pointer rounded-full border px-4 py-2 text-sm font-bold transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold-500',
+                    type === v ? 'border-navy-800 bg-navy-800 text-white' : 'border-line bg-white text-navy-900 hover:border-navy-800')}>
                     <input type="radio" name="type" value={v} checked={type === v} onChange={() => setType(v)} className="sr-only" />
                     {l}
                   </label>
@@ -192,17 +192,17 @@ export function QuoteForm({ locale, compact = false }: { locale: Locale; compact
       </fieldset>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className={buttonClass('wax')}>
+        <button type="submit" className={buttonClass('whatsapp')}>
           <WhatsAppIcon className="size-5" /> {q.sendWhatsApp}
         </button>
-        <button type="button" onClick={submit('mail')} className={buttonClass('line')}>
+        <button type="button" onClick={submit('mail')} className={buttonClass('navy')}>
           <Mail className="size-4" aria-hidden /> {q.sendEmail}
         </button>
         <p className="text-sm text-muted sm:ms-2">{q.privacy}</p>
       </div>
 
       {sent && (
-        <div role="status" className="border border-ink bg-paper-2 p-5 text-sm">
+        <div role="status" className="rounded-lg border border-gold-500 bg-gold-50 p-5 text-sm">
           <p className="flex flex-wrap items-center gap-2 font-semibold">{q.sentTitle} — {q.reference}: <span dir="ltr" className="font-mono">{sent}</span></p>
           <p className="mt-2 text-muted">
             {q.sentBody}{' '}

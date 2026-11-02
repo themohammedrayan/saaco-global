@@ -3,7 +3,7 @@ import { getDict } from '@/i18n/dict'
 import { site } from '@/content/site'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
-import { PageHero } from '@/components/PageHero'
+import { PageBanner } from '@/components/PageBanner'
 import { Prose } from '@/components/Prose'
 import { Section } from '@/components/ui'
 
@@ -18,8 +18,8 @@ export default async function LegalPage({ params }: PageProps<'/[locale]/legal'>
   const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} no="L-1" title={t.footer.legal} crumbs={[{ label: t.footer.legal }]} />
-      <Section>
+      <PageBanner locale={locale} title={t.footer.legal} crumbs={[{ label: t.footer.legal }]} />
+      <Section tone="mist">
         <Prose>
           <h2>{ar ? 'مشغّل الموقع' : 'Website operator'}</h2>
           <p>

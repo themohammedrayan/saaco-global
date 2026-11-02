@@ -2,7 +2,7 @@ import { getDict } from '@/i18n/dict'
 import { site } from '@/content/site'
 import { getLocale } from '@/lib/locale'
 import { pageMeta } from '@/lib/seo'
-import { PageHero } from '@/components/PageHero'
+import { PageBanner } from '@/components/PageBanner'
 import { Prose } from '@/components/Prose'
 import { Section } from '@/components/ui'
 
@@ -17,8 +17,8 @@ export default async function PrivacyPage({ params }: PageProps<'/[locale]/priva
   const ar = locale === 'ar'
   return (
     <>
-      <PageHero locale={locale} no="L-2" title={t.footer.privacy} crumbs={[{ label: t.footer.privacy }]} />
-      <Section>
+      <PageBanner locale={locale} title={t.footer.privacy} crumbs={[{ label: t.footer.privacy }]} />
+      <Section tone="mist">
         <Prose>
           <p>{ar ? 'نحترم خصوصيتك. توضح هذه الصفحة البيانات التي نتعامل معها عند استخدامك لهذا الموقع.' : 'We respect your privacy. This page explains what data is handled when you use this website.'}</p>
           <h2>{ar ? 'نماذج الاستفسار' : 'Enquiry forms'}</h2>

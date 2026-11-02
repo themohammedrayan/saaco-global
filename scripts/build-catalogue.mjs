@@ -14,14 +14,14 @@ const { process: steps, services } = await import(path.join(root, 'src/content/c
 const { incoterms } = await import(path.join(root, 'src/content/export.ts'))
 
 const C = {
-  forest: rgb(0.047, 0.165, 0.122),
-  forest2: rgb(0.071, 0.227, 0.169),
-  saffron: rgb(0.851, 0.51, 0.169),
-  gold: rgb(0.89, 0.796, 0.557),
-  cream: rgb(0.984, 0.969, 0.937),
-  ink: rgb(0.106, 0.125, 0.098),
-  muted: rgb(0.353, 0.38, 0.341),
-  line: rgb(0.902, 0.875, 0.812),
+  forest: rgb(0.039, 0.133, 0.341),   // navy-900 #0a2257
+  forest2: rgb(0.051, 0.165, 0.42),   // navy-800 #0d2a6b
+  saffron: rgb(0.831, 0.639, 0.165),  // gold-500 #d4a32a
+  gold: rgb(0.886, 0.725, 0.302),     // gold-400 #e2b94d
+  cream: rgb(0.98, 0.969, 0.945),     // cream #faf7f1
+  ink: rgb(0.067, 0.094, 0.153),
+  muted: rgb(0.357, 0.392, 0.455),
+  line: rgb(0.89, 0.902, 0.933),
   white: rgb(1, 1, 1),
 }
 const W = 595.28, H = 841.89, M = 48
@@ -36,7 +36,7 @@ doc.setTitle(`${site.name} - Product Catalogue`)
 doc.setAuthor(site.name)
 doc.setSubject('Premium spices and natural produce from Kerala, India')
 doc.setKeywords(['spices', 'Kerala', 'export', 'cardamom', 'black pepper'])
-const serif = await doc.embedFont(StandardFonts.TimesRomanBold)
+const serif = await doc.embedFont(StandardFonts.HelveticaBold)
 const sans = await doc.embedFont(StandardFonts.Helvetica)
 const bold = await doc.embedFont(StandardFonts.HelveticaBold)
 
@@ -78,7 +78,7 @@ function footer(page) {
 // ---- Cover
 {
   const p = doc.addPage([W, H])
-  const hero = await jpg('/images/hero/spice-harvest.webp', 1400)
+  const hero = await jpg('/images/plates/mixed.webp', 1400)
   cover(p, hero, 0, 0, W, H)
   p.drawRectangle({ x: 0, y: 0, width: W, height: H, color: C.forest, opacity: 0.78 })
   p.drawRectangle({ x: M, y: H - 168, width: 228, height: 118, color: C.cream })

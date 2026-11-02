@@ -43,11 +43,6 @@ export function CategoryTile({ c, locale }: { c: Category; locale: Locale }) {
   )
 }
 
-/** Back-compat: inner pages still render a category card grid. */
-export function CategoryCard({ c, locale }: { c: Category; locale: Locale; index?: number }) {
-  return <CategoryTile c={c} locale={locale} />
-}
-
 /* ---------------- Product card ---------------- */
 export function ProductCard({ c, i, locale, className, reveal = true }: { c: Category; i: ProductItem; locale: Locale; className?: string; reveal?: boolean }) {
   const name = tr(i.name, locale)
