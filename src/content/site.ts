@@ -72,12 +72,15 @@ export const site = {
   certifications: [] as { name: string; number?: string }[],
 }
 
-/** Countries shown in the centre of the footer bar. Order as given by the business. */
-export const countries: { code: string; name: L; region: L }[] = [
+/**
+ * Countries shown in the top bar and footer. Order as given by the business.
+ * `whatsapp` (digits only, with country code) turns the name into a link to that branch's WhatsApp.
+ */
+export const countries: { code: string; name: L; region: L; whatsapp?: string }[] = [
   { code: 'IN', name: { en: 'India', ar: 'الهند' }, region: { en: 'Kerala · Head office', ar: 'كيرالا · المقر الرئيسي' } },
   { code: 'BH', name: { en: 'Bahrain', ar: 'البحرين' }, region: { en: 'GCC', ar: 'دول الخليج' } },
   { code: 'LK', name: { en: 'Sri Lanka', ar: 'سريلانكا' }, region: { en: 'South Asia', ar: 'جنوب آسيا' } },
-  { code: 'SA', name: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' }, region: { en: 'GCC', ar: 'دول الخليج' } },
+  { code: 'SA', name: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' }, region: { en: 'GCC', ar: 'دول الخليج' }, whatsapp: '966590246464' },
   { code: 'AE', name: { en: 'UAE', ar: 'الإمارات' }, region: { en: 'GCC', ar: 'دول الخليج' } },
 ]
 
