@@ -27,6 +27,20 @@ export const site = {
     responseTime: { en: 'We reply to every enquiry within 24 hours.', ar: 'نردّ على كل استفسار خلال 24 ساعة.' } satisfies L,
     timeZone: 'Asia/Kolkata',
   },
+  /** Registered head office. */
+  headOffice: {
+    locality: 'Calicut',
+    district: 'Kozhikode',
+    region: 'Kerala',
+    postalCode: '673006',
+    country: 'India',
+    countryCode: 'IN',
+    lines: {
+      en: 'Calicut, Kerala 673006, India',
+      ar: 'كاليكوت، كيرالا 673006، الهند',
+    } satisfies L,
+  },
+  /** Branch office (Perinthalmanna). Geo point is used for the map embeds. */
   address: {
     locality: 'Perinthalmanna',
     district: 'Malappuram',

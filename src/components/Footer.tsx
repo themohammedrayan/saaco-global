@@ -70,9 +70,10 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
 
         <div className="lg:col-span-3">
-          <ColTitle>{ar ? 'المكتب الرئيسي — الهند' : 'Head office — India'}</ColTitle>
+          <ColTitle>{site.name}</ColTitle>
           <ul className="space-y-4">
-            <li className="flex gap-3"><MapPin className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><span>{site.name}<br />{tr(site.address.lines, locale)}</span></li>
+            <li className="flex gap-3"><MapPin className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><span><strong className="font-semibold text-white">{ar ? 'المكتب الرئيسي' : 'Head office'}</strong><br />{tr(site.headOffice.lines, locale)}</span></li>
+            <li className="flex gap-3"><MapPin className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><span><strong className="font-semibold text-white">{ar ? 'الفرع' : 'Branch'}</strong><br />{tr(site.address.lines, locale)}</span></li>
             <li className="flex gap-3"><Phone className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a dir="ltr" className="hover:text-gold-400" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a></li>
             <li className="flex gap-3"><Mail className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a className="break-all hover:text-gold-400" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
           </ul>
