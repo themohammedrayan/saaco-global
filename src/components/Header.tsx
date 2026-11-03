@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { ChevronDown, ClipboardList, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, ShoppingCart, X } from 'lucide-react'
 import { href, tr, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { categories } from '@/content/products'
@@ -127,7 +127,7 @@ export function Header({ locale }: { locale: Locale }) {
 
         <div className="flex items-center gap-2">
           <Link href={href(locale, '/quote')} className="relative rounded-md p-2.5 text-navy-900 hover:bg-mist" aria-label={`${t.nav.quoteBasket} (${count})`}>
-            <ClipboardList className="size-6" aria-hidden />
+            <ShoppingCart className="size-6" aria-hidden />
             <span className={cx('absolute -end-0.5 -top-0.5 grid size-5 place-items-center rounded-full text-[0.68rem] font-bold', count ? 'bg-gold-500 text-navy-950' : 'bg-mist text-muted')}>{count}</span>
           </Link>
           <span className="hidden sm:block"><Link href={href(locale, '/quote')} className={buttonClass('gold')}>{t.nav.quote}</Link></span>

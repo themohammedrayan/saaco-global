@@ -27,6 +27,21 @@ export const site = {
     responseTime: { en: 'We reply to every enquiry within 24 hours.', ar: 'نردّ على كل استفسار خلال 24 ساعة.' } satisfies L,
     timeZone: 'Asia/Kolkata',
   },
+  /** Registered head office. */
+  headOffice: {
+    locality: 'Calicut',
+    district: 'Kozhikode',
+    region: 'Kerala',
+    postalCode: '673008',
+    street: 'Velliparamba',
+    country: 'India',
+    countryCode: 'IN',
+    lines: {
+      en: 'Velliparamba, Calicut, Kerala 673008, India',
+      ar: 'فيليبارامبا، كاليكوت، كيرالا 673008، الهند',
+    } satisfies L,
+  },
+  /** Branch office (Perinthalmanna). Geo point is used for the map embeds. */
   address: {
     locality: 'Perinthalmanna',
     district: 'Malappuram',
