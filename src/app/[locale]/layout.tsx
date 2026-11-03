@@ -12,6 +12,7 @@ import { Header } from '@/components/Header'
 import { TopBar } from '@/components/TopBar'
 import { Footer } from '@/components/Footer'
 import { WhatsAppFab } from '@/components/WhatsAppFab'
+import { BackToTop } from '@/components/BackToTop'
 import { QuoteBasketPill } from '@/components/AddToQuote'
 import { RevealObserver } from '@/components/Reveal'
 import { JsonLd } from '@/components/JsonLd'
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           <main id="main">{children}</main>
           <Footer locale={locale} />
           <WhatsAppFab locale={locale} />
+          <BackToTop locale={locale} />
           <QuoteBasketPill locale={locale} />
         </QuoteProvider>
         <RevealObserver />

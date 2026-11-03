@@ -203,7 +203,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
                 <span className={`grid size-11 shrink-0 place-items-center rounded-md font-heading text-sm font-black ${k === 0 ? 'bg-gold-500 text-navy-950' : 'bg-navy-100 text-navy-800'}`} dir="ltr">{c.code}</span>
                 <span className="flex-1">
                   <span className={`block font-heading font-extrabold uppercase ${k === 0 ? 'text-white' : 'text-navy-900'}`}>{tr(c.name, locale)}</span>
-                  <span className={`block text-sm ${k === 0 ? 'text-white/70' : 'text-muted'}`}>{k === 0 ? `${v.hq} · ${site.address.locality}, ${ar ? 'كيرالا' : 'Kerala'}` : `${v.market} · ${tr(c.region, locale)}`}</span>
+                  <span className={`block text-sm ${k === 0 ? 'text-white/70' : 'text-muted'}`}>{k === 0 ? `${v.hq} · ${site.headOffice.locality}, ${ar ? 'كيرالا' : 'Kerala'}` : `${v.market} · ${tr(c.region, locale)}`}</span>
                 </span>
                 {k === 0 && <MapPin className="size-5 text-gold-400" aria-hidden />}
               </li>
