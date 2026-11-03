@@ -32,12 +32,13 @@ export const site = {
     locality: 'Calicut',
     district: 'Kozhikode',
     region: 'Kerala',
-    postalCode: '673006',
+    postalCode: '673008',
+    street: 'Velliparamba',
     country: 'India',
     countryCode: 'IN',
     lines: {
-      en: 'Calicut, Kerala 673006, India',
-      ar: 'كاليكوت، كيرالا 673006، الهند',
+      en: 'Velliparamba, Calicut, Kerala 673008, India',
+      ar: 'فيليبارامبا، كاليكوت، كيرالا 673008، الهند',
     } satisfies L,
   },
   /** Branch office (Perinthalmanna). Geo point is used for the map embeds. */
