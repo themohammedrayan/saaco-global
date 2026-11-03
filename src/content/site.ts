@@ -41,7 +41,12 @@ export const site = {
       ar: 'فيليبارامبا، كاليكوت، كيرالا 673008، الهند',
     } satisfies L,
   },
-  /** Branch office (Perinthalmanna). Geo point is used for the map embeds. */
+  /** Branch locations shown in the footer and contact pages. */
+  branches: {
+    en: 'Ernakulam | Trivandrum | Malappuram | Wayanad',
+    ar: 'إرناكولام | تريفاندرم | مالابورام | وايناد',
+  } satisfies L,
+  /** Original Perinthalmanna location. Geo point is used for the map embeds and structured data. */
   address: {
     locality: 'Perinthalmanna',
     district: 'Malappuram',
