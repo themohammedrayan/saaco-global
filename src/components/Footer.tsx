@@ -45,6 +45,10 @@ export function Footer({ locale }: { locale: Locale }) {
               <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           </div>
+          <p className="mt-6 text-sm">
+            {ar ? 'تطوير' : 'Created by'}{' '}
+            <a className="font-semibold text-gold-400 underline-offset-4 hover:underline" href="https://rayan.rivlo.live/" target="_blank" rel="noopener noreferrer">Mohammed Rayan</a>
+          </p>
           {socials.length > 0 && (
             <ul className="mt-6 flex gap-3">
               {socials.map(([k, url]) => (
@@ -83,7 +87,7 @@ export function Footer({ locale }: { locale: Locale }) {
 
       <div className="border-t border-white/10">
         <Container className="grid gap-3 py-5 text-xs lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <p>© {year} {site.legalName}. {t.footer.rights} <span className="text-white/60">· {ar ? 'تطوير' : 'Created by'} <a className="font-semibold text-gold-400 hover:underline" href="https://rayan.rivlo.live/" target="_blank" rel="noopener noreferrer">Mohammed Rayan</a></span></p>
+          <p>© {year} {site.legalName}. {t.footer.rights}</p>
           <ul aria-label={ar ? 'أين نعمل' : 'Where we trade'} className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-semibold text-white lg:justify-center">
             {countries.map((c, i) => (
               <li key={c.code} className="flex items-center gap-2.5">
