@@ -73,7 +73,7 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
                       {k === 0 ? (
                         <>
                           <p className="mt-1 flex gap-1.5 text-sm text-ink-2"><MapPin className="mt-0.5 size-4 shrink-0 text-gold-600" aria-hidden /><span><strong className="text-navy-900">{ar ? 'المكتب الرئيسي' : 'Head office'}:</strong> {tr(site.headOffice.lines, locale)}</span></p>
-                          <p className="mt-1 flex gap-1.5 text-sm text-ink-2"><MapPin className="mt-0.5 size-4 shrink-0 text-gold-600" aria-hidden /><span><strong className="text-navy-900">{ar ? 'الفرع' : 'Branch'}:</strong> {tr(site.address.lines, locale)}</span></p>
+                          <p className="mt-1 flex gap-1.5 text-sm text-ink-2"><MapPin className="mt-0.5 size-4 shrink-0 text-gold-600" aria-hidden /><span><strong className="text-navy-900">{ar ? 'الفروع' : 'Branches'}:</strong> {tr(site.branches, locale)}</span></p>
                         </>
                       ) : (
                         <p className="mt-1 text-sm text-muted">{t.v3.market} · {tr(c.region, locale)} — {ar ? 'تواصل عبر واتساب أو البريد' : 'enquire via WhatsApp or email'}</p>
