@@ -6,6 +6,7 @@ import { getDict } from '@/i18n/dict'
 import { categories } from '@/content/products'
 import { countries, site, waLink } from '@/content/site'
 import { WhatsAppIcon } from './Icon'
+import { CountryName } from './CountryName'
 import { Container } from './ui'
 
 function ColTitle({ children }: { children: React.ReactNode }) {
@@ -80,7 +81,13 @@ export function Footer({ locale }: { locale: Locale }) {
           <h3 className="mb-3 mt-8 font-heading text-xs font-extrabold uppercase tracking-wider text-white">{ar ? 'الأسواق التي نخدمها' : 'Markets we serve'}</h3>
           <ul className="flex flex-wrap gap-2">
             {countries.map((c) => (
-              <li key={c.code} className="rounded-full border border-white/15 px-3 py-1 text-xs">{tr(c.name, locale)}</li>
+              <li key={c.code} className="text-xs">
+                {c.whatsapp ? (
+                  <CountryName c={c} locale={locale} className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366]/60 px-3 py-1 hover:bg-[#25D366] hover:text-white" />
+                ) : (
+                  <span className="inline-block rounded-full border border-white/15 px-3 py-1">{tr(c.name, locale)}</span>
+                )}
+              </li>
             ))}
           </ul>
         </div>
@@ -93,7 +100,7 @@ export function Footer({ locale }: { locale: Locale }) {
             {countries.map((c, i) => (
               <li key={c.code} className="flex items-center gap-2.5">
                 {i > 0 && <span aria-hidden className="text-gold-500">•</span>}
-                {tr(c.name, locale)}
+                <CountryName c={c} locale={locale} />
               </li>
             ))}
           </ul>
