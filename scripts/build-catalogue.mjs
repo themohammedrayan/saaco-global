@@ -82,7 +82,7 @@ function footer(page) {
   cover(p, hero, 0, 0, W, H)
   p.drawRectangle({ x: 0, y: 0, width: W, height: H, color: C.forest, opacity: 0.78 })
   p.drawRectangle({ x: M, y: H - 168, width: 228, height: 118, color: C.cream })
-  p.drawImage(logo, { x: M + 10, y: H - 160, width: 208, height: 208 * 306 / 660 })
+  p.drawImage(logo, { x: M + 10, y: H - 160, width: 208, height: 208 * 449 / 900 })
   p.drawText('PRODUCT CATALOGUE', { x: M, y: 420, size: 11, font: bold, color: C.gold })
   p.drawLine({ start: { x: M, y: 410 }, end: { x: M + 60, y: 410 }, thickness: 2, color: C.saffron })
   let y = 360

@@ -34,7 +34,7 @@ export function Footer({ locale }: { locale: Locale }) {
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <span className="inline-block rounded-lg bg-white px-4 py-3">
-            <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={660} height={306} sizes="200px" className="h-20 w-auto" />
+            <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={900} height={449} sizes="200px" className="h-20 w-auto" />
           </span>
           <p className="mt-6 max-w-sm leading-relaxed">{t.footer.about}</p>
           <div className="mt-6 flex flex-wrap gap-3">
