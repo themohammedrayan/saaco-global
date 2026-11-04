@@ -65,7 +65,7 @@ export function Header({ locale }: { locale: Locale }) {
       </a>
       <div className="mx-auto flex h-20 max-w-[80rem] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[5.5rem] lg:px-8">
         <Link href={href(locale)} className="shrink-0" aria-label="The SAACO Global Trading Company — home">
-          <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={660} height={306} priority sizes="190px" className="h-14 w-auto lg:h-[4.25rem]" />
+          <Image src="/images/brand/saaco-logo.png" alt="The SAACO Global Trading Company" width={900} height={449} priority sizes="190px" className="h-14 w-auto lg:h-[4.25rem]" />
         </Link>
 
         <nav aria-label="Main" className="hidden h-full lg:block">
