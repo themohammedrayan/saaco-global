@@ -78,18 +78,6 @@ export function Footer({ locale }: { locale: Locale }) {
             <li className="flex gap-3"><Phone className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a dir="ltr" className="hover:text-gold-400" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a></li>
             <li className="flex gap-3"><Mail className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a className="break-all hover:text-gold-400" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
           </ul>
-          <h3 className="mb-3 mt-8 font-heading text-xs font-extrabold uppercase tracking-wider text-white">{ar ? 'الأسواق التي نخدمها' : 'Markets we serve'}</h3>
-          <ul className="flex flex-wrap gap-2">
-            {countries.map((c) => (
-              <li key={c.code} className="text-xs">
-                {c.whatsapp ? (
-                  <CountryName c={c} locale={locale} className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366]/60 px-3 py-1 hover:bg-[#25D366] hover:text-white" />
-                ) : (
-                  <span className="inline-block rounded-full border border-white/15 px-3 py-1">{tr(c.name, locale)}</span>
-                )}
-              </li>
-            ))}
-          </ul>
         </div>
       </Container>
 
