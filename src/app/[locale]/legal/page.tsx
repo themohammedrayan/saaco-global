@@ -23,7 +23,7 @@ export default async function LegalPage({ params }: PageProps<'/[locale]/legal'>
         <Prose>
           <h2>{ar ? 'مشغّل الموقع' : 'Website operator'}</h2>
           <p>
-            {site.legalName}<br />{ar ? 'المكتب الرئيسي' : 'Head office'}: {tr(site.headOffice.lines, locale)}<br />{ar ? 'الفرع' : 'Branch'}: {tr(site.address.lines, locale)}<br />
+            {site.legalName}<br />{ar ? 'المكتب الرئيسي' : 'Head office'}: {tr(site.headOffice.lines, locale)}<br />{ar ? 'الفروع' : 'Branches'}: {tr(site.branches, locale)}<br />
             {ar ? 'الهاتف' : 'Phone'}: <span dir="ltr">{site.contact.phone}</span><br />
             {ar ? 'البريد الإلكتروني' : 'Email'}: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
           </p>

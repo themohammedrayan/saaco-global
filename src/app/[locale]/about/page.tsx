@@ -112,7 +112,7 @@ export default async function AboutPage({ params }: PageProps<'/[locale]/about'>
             <SectionTitle kicker={t.about.whereTitle} title={ar ? 'زورونا في كيرالا' : 'Visit us in Kerala'} lead={t.about.whereBody} />
             <p className="flex gap-3 rounded-lg border border-line bg-mist p-4 text-ink-2">
               <MapPin className="mt-0.5 size-5 shrink-0 text-gold-600" aria-hidden />
-              <span><strong className="text-navy-900">{site.name}</strong><br />{ar ? 'المكتب الرئيسي' : 'Head office'}: {tr(site.headOffice.lines, locale)}<br />{ar ? 'الفرع' : 'Branch'}: {tr(site.address.lines, locale)}</span>
+              <span><strong className="text-navy-900">{site.name}</strong><br />{ar ? 'المكتب الرئيسي' : 'Head office'}: {tr(site.headOffice.lines, locale)}<br />{ar ? 'الفروع' : 'Branches'}: {tr(site.branches, locale)}</span>
             </p>
             <ButtonLink href={href(locale, '/contact')} variant="navy" className="mt-6">{t.nav.contact} <ArrowRight className="flip-rtl size-4" /></ButtonLink>
           </div>
