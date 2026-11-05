@@ -176,10 +176,10 @@ const en = {
   },
   v3: {
     slides: [
+      { kicker: 'Cosmetics · VIRAZ', title: 'Herbal beauty, naturally luxurious.', body: 'VIRAZ herbal soaps, creams, shampoos and hair oils, made in India by SAACO Global. Paraben-free formulas for distributors, retailers and private label.' },
       { kicker: 'Malabar Coast · Kerala · India', title: 'Premium spices. Reliable export.', body: 'Cardamom, black pepper, cinnamon, clove and turmeric sourced farm-direct, graded and packed for importers worldwide.' },
       { kicker: 'Tea & Coffee', title: 'From the Western Ghats to your shelves.', body: 'Loose-leaf tea, green and roasted coffee and ground blends for distributors, cafés and retail brands.' },
       { kicker: 'Honey & Coconut Oil', title: 'Natural goods, export-ready.', body: 'Natural honey and pure coconut oil in bulk or retail packs, under our partners’ brands or your own label.' },
-      { kicker: 'Cosmetics · VIRAZ', title: 'Herbal beauty, naturally luxurious.', body: 'VIRAZ herbal soaps, creams, shampoos and hair oils, made in India by SAACO Global. Paraben-free formulas for distributors, retailers and private label.' },
     ],
     trust: [
       { t: 'Farm-direct sourcing', b: 'Traceable lots from Kerala growers' },
@@ -416,10 +416,10 @@ const ar: Dict = {
   },
   v3: {
     slides: [
+      { kicker: 'مستحضرات التجميل · VIRAZ', title: 'جمال عشبي بلمسة فاخرة.', body: 'صابون وكريمات وشامبو وزيوت شعر عشبية من VIRAZ، من إنتاج ساكو جلوبال في الهند. تركيبات خالية من البارابين للموزعين وتجار التجزئة والعلامات الخاصة.' },
       { kicker: 'ساحل مالابار · كيرالا · الهند', title: 'توابل فاخرة. تصدير موثوق.', body: 'هيل وفلفل أسود وقرفة وقرنفل وكركم بتوريد مباشر من المزارع، مفرزة ومعبّأة للمستوردين حول العالم.' },
       { kicker: 'الشاي والقهوة', title: 'من الغاتس الغربية إلى رفوفك.', body: 'شاي سائب وقهوة خضراء ومحمّصة وخلطات مطحونة للموزعين والمقاهي وعلامات التجزئة.' },
       { kicker: 'العسل وزيت جوز الهند', title: 'منتجات طبيعية جاهزة للتصدير.', body: 'عسل طبيعي وزيت جوز هند نقي بالجملة أو بعبوات التجزئة، بعلامات شركائنا أو بعلامتك الخاصة.' },
-      { kicker: 'مستحضرات التجميل · VIRAZ', title: 'جمال عشبي بلمسة فاخرة.', body: 'صابون وكريمات وشامبو وزيوت شعر عشبية من VIRAZ، من إنتاج ساكو جلوبال في الهند. تركيبات خالية من البارابين للموزعين وتجار التجزئة والعلامات الخاصة.' },
     ],
     trust: [
       { t: 'توريد مباشر من المزارع', b: 'دفعات قابلة للتتبّع من مزارعي كيرالا' },

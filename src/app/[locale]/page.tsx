@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]'>) {
 }
 
 const FEATURED = ['green-cardamom', 'black-pepper', 'cinnamon', 'clove', 'turmeric', 'black-tea', 'natural-honey', 'coconut-oil']
-const SLIDE_IMAGES = ['/images/plates/mixed.webp', '/images/tea-coffee/cover.webp', '/images/honey-coconut-oil/duo.webp', '/images/cosmetics-perfumes/viraz-range.webp']
+const SLIDE_IMAGES = ['/images/cosmetics-perfumes/viraz-range.webp', '/images/plates/mixed.webp', '/images/tea-coffee/cover.webp', '/images/honey-coconut-oil/duo.webp']
 const TRUST_ICONS = ['sprout', 'package', 'ship', 'clock'] as const
 const WHY_ICONS = ['award', 'package', 'search', 'truck'] as const
 
