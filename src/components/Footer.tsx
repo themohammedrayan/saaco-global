@@ -46,8 +46,8 @@ export function Footer({ locale }: { locale: Locale }) {
             </a>
           </div>
           <p className="mt-6 text-sm">
-            {ar ? 'تطوير' : 'Created by'}{' '}
-            <a className="font-semibold text-gold-400 underline-offset-4 hover:underline" href="https://rayan.rivlo.live/" target="_blank" rel="noopener noreferrer">Mohammed Rayan</a>
+            {ar ? 'بدعم من' : 'Powered by'}{' '}
+            <a className="font-semibold text-gold-400 underline-offset-4 hover:underline" href="https://rivlo.live/" target="_blank" rel="noopener noreferrer">Rivlo</a>
           </p>
           {socials.length > 0 && (
             <ul className="mt-6 flex gap-3">
