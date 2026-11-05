@@ -7,7 +7,7 @@ import { cx } from './ui'
 
 export type Slide = { image: string; kicker: string; title: string; body: string }
 
-/** Crossfading hero. Pauses on hover/focus and for reduced-motion users. */
+/** Crossfading hero that advances every 6.5s. Pauses on hover, on keyboard focus and for reduced-motion users. */
 export function HeroSlider({ slides, actions, labels }: { slides: Slide[]; actions: ReactNode; labels: { prev: string; next: string; goto: string } }) {
   const [i, setI] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -29,7 +29,7 @@ export function HeroSlider({ slides, actions, labels }: { slides: Slide[]; actio
       className="relative isolate min-h-[34rem] overflow-hidden bg-navy-950 text-white sm:min-h-[38rem] lg:min-h-[40rem]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
+      onFocus={(e) => e.target.matches(':focus-visible') && setPaused(true)}
       onBlur={() => setPaused(false)}
       aria-roledescription="carousel"
     >

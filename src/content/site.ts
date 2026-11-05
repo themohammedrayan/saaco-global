@@ -7,7 +7,7 @@ import type { L } from '@/i18n/config'
  */
 export const site = {
   name: 'SAACO Global',
-  legalName: 'SAACO Global', // TODO(verify): registered legal entity name
+  legalName: 'SAACO GLOBAL LLP',
   url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://saacoglobal.com').replace(/\/$/, ''),
   foundedYear: 2010,
   tagline: {
