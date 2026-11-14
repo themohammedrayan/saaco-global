@@ -50,4 +50,9 @@ describe('product catalogue data', () => {
   it('lists the five trading countries in order', () => {
     expect(countries.map((c) => c.code)).toEqual(['IN', 'BH', 'LK', 'SA', 'AE'])
   })
+
+  it('links the Saudi Arabia branch to its WhatsApp number', () => {
+    expect(countries.find((c) => c.code === 'SA')?.whatsapp).toBe('966590246464')
+    for (const c of countries) if (c.whatsapp) expect(c.whatsapp).toMatch(/^\d{8,15}$/)
+  })
 })

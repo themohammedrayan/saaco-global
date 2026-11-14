@@ -6,6 +6,7 @@ import { getDict } from '@/i18n/dict'
 import { categories } from '@/content/products'
 import { countries, site, waLink } from '@/content/site'
 import { WhatsAppIcon } from './Icon'
+import { CountryName } from './CountryName'
 import { Container } from './ui'
 
 function ColTitle({ children }: { children: React.ReactNode }) {
@@ -44,6 +45,10 @@ export function Footer({ locale }: { locale: Locale }) {
               <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           </div>
+          <p className="mt-6 text-sm">
+            {ar ? 'بدعم من' : 'Powered by'}{' '}
+            <a className="font-semibold text-gold-400 underline-offset-4 hover:underline" href="https://rivlo.live/" target="_blank" rel="noopener noreferrer">Rivlo</a>
+          </p>
           {socials.length > 0 && (
             <ul className="mt-6 flex gap-3">
               {socials.map(([k, url]) => (
@@ -77,12 +82,6 @@ export function Footer({ locale }: { locale: Locale }) {
             <li className="flex gap-3"><Phone className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a dir="ltr" className="hover:text-gold-400" href={`tel:${site.contact.phoneE164}`}>{site.contact.phone}</a></li>
             <li className="flex gap-3"><Mail className="mt-1 size-4 shrink-0 text-gold-400" aria-hidden /><a className="break-all hover:text-gold-400" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
           </ul>
-          <h3 className="mb-3 mt-8 font-heading text-xs font-extrabold uppercase tracking-wider text-white">{ar ? 'الأسواق التي نخدمها' : 'Markets we serve'}</h3>
-          <ul className="flex flex-wrap gap-2">
-            {countries.map((c) => (
-              <li key={c.code} className="rounded-full border border-white/15 px-3 py-1 text-xs">{tr(c.name, locale)}</li>
-            ))}
-          </ul>
         </div>
       </Container>
 
@@ -93,7 +92,7 @@ export function Footer({ locale }: { locale: Locale }) {
             {countries.map((c, i) => (
               <li key={c.code} className="flex items-center gap-2.5">
                 {i > 0 && <span aria-hidden className="text-gold-500">•</span>}
-                {tr(c.name, locale)}
+                <CountryName c={c} locale={locale} />
               </li>
             ))}
           </ul>

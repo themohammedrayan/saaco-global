@@ -245,7 +245,7 @@ export const categories: Category[] = [
       { src: '/images/cosmetics-perfumes/viraz-golden-flora.webp', alt: { en: 'VIRAZ Golden Flora eau de parfum', ar: 'عطر VIRAZ Golden Flora' } },
     ],
     items: [
-      { id: 'natural-soap', image: '/images/plates/soap.webp', name: { en: 'Handmade Natural Soap', ar: 'صابون طبيعي مصنوع يدويًا' }, hs: '3401.11', forms: spec('Bars, gift packs, private label', 'قوالب، علب هدايا، علامة خاصة') },
+      { id: 'natural-soap', image: '/images/plates/soap-viraz.webp', name: { en: 'Handmade Natural Soap', ar: 'صابون طبيعي مصنوع يدويًا' }, hs: '3401.11', forms: spec('Bars, gift packs, private label', 'قوالب، علب هدايا، علامة خاصة') },
       { id: 'hair-oil', image: '/images/cosmetics-perfumes/hair-oil.webp', name: { en: 'Herbal Hair Oil', ar: 'زيت الشعر العشبي' }, hs: '3305.90', forms: spec('Bottles, private label', 'زجاجات، علامة خاصة') },
       { id: 'perfumes', image: '/images/cosmetics-perfumes/fragrance-oil.webp', name: { en: 'Perfumes & Fragrance Oils', ar: 'العطور والزيوت العطرية' }, hs: '3303.00', forms: spec('Eau de parfum, attar / fragrance oils', 'ماء عطر، عطور زيتية') },
     ],

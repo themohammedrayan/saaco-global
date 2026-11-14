@@ -1,9 +1,10 @@
 import { Mail, Phone } from 'lucide-react'
-import { tr, type Locale } from '@/i18n/config'
+import type { Locale } from '@/i18n/config'
 import { countries, site, waLink } from '@/content/site'
 import { WhatsAppIcon } from './Icon'
 import { Container } from './ui'
 import { LangSwitch } from './LangSwitch'
+import { CountryName } from './CountryName'
 
 export function TopBar({ locale }: { locale: Locale }) {
   return (
@@ -26,7 +27,7 @@ export function TopBar({ locale }: { locale: Locale }) {
           {countries.map((c, i) => (
             <span key={c.code} className="flex items-center gap-2">
               {i > 0 && <span aria-hidden className="text-gold-500">•</span>}
-              {tr(c.name, locale)}
+              <CountryName c={c} locale={locale} />
             </span>
           ))}
         </p>
